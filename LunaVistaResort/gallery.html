@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gallery</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #fefaf0; font-family: 'Trebuchet MS', sans-serif; color: #4a3b5a; overflow-x: hidden;">
+
+  
+    <nav style="background: linear-gradient(to right, #5c4b7a, #7e6b9e), linear-gradient(to bottom, rgba(0,0,0,0) 60%, rgba(0,0,0,0.08) 100%); background-blend-mode: multiply; padding: 5px 50px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(43, 0, 82, 0.05);">
+        <a href="home.html">
+            <img src="logo.png" alt="Luna Vista Logo" style="height: 45px; filter: drop-shadow(0px 3px 6px rgba(43, 0, 82, 0.5));">
+        </a>
+        <div style="display: flex; gap: 35px; align-items: center;">
+            <a href="home.html" style="text-decoration: none; color: #e9e4f0; display: flex; flex-direction: column; align-items: center; font-size: 9px; font-weight: bold;">
+                <img src="house.png" width="20" style="margin-bottom: 2px;"> HOME
+            </a>
+            <a href="gallery.html" style="text-decoration: none; color: #f4d03f; display: flex; flex-direction: column; align-items: center; font-size: 9px; font-weight: bold;">
+                <img src="gallery.png" width="20" style="margin-bottom: 2px;"> GALLERY
+            </a>
+            <a href="reservation.html" style="text-decoration: none; color: #e9e4f0; display: flex; flex-direction: column; align-items: center; font-size: 9px; font-weight: bold;">
+                <img src="reserve.png" width="20" style="margin-bottom: 2px;"> RESERVATION
+            </a>
+            <a href="login.html" style="text-decoration: none; color: #e9e4f0; display: flex; flex-direction: column; align-items: center; font-size: 9px; font-weight: bold;">
+                <img src="profile.png" width="20" style="margin-bottom: 2px;"> LOG IN
+            </a>
+        </div>
+    </nav>
+
+    <header style="text-align: center; padding: 40px 0; background: linear-gradient(to bottom, #f0ecf7, #fefaf0);">
+        <h1 style="font-size: 2.5rem; color: #4a3b5a; margin: 0;">Our Accommodations</h1>
+        <p style="color: #8e7caf; letter-spacing: 2px;">LUXURY TAILORED FOR THE INTELLECTUAL</p>
+    </header>
+
+    <main style="max-width: 1200px; margin: 0 auto; padding: 20px;">
+
+  
+        <section style="display: flex; gap: 40px; margin-bottom: 80px; align-items: center; background: white; padding: 30px; border-radius: 15px; box-shadow: 12px 12px 0px #5c4b7a; border: 3px solid #d1c4e9;">
+            <div style="flex: 1; position: relative; overflow: hidden; border-radius: 10px; height: 350px; border: 1px solid #eee;">
+                <div id="carousel1" style="display: flex; width: 300%; height: 100%; transition: transform 0.6s ease-in-out;">
+                    <img src="1bed.JPG" style="width: 33.33%; object-fit: cover;">
+                    <img src="1living.JPG" style="width: 33.33%; object-fit: cover;">
+                    <img src="1desk.png" style="width: 33.33%; object-fit: cover;">
+                </div>
+                <button onclick="move(1, -1)" style="position: absolute; top: 50%; left: 10px; transform: translateY(-50%); background: rgba(92,75,122,0.6); color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer;">❮</button>
+                <button onclick="move(1, 1)" style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%); background: rgba(92,75,122,0.6); color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer;">❯</button>
+            </div>
+            <div style="flex: 1;">
+                <h2 style="color: #2E8B57; margin-top: 0;">Archives Standard Room</h2>
+                <p style="color: #6b5b7b;">A serene, greenish sanctuary inspired by the tranquility of the Archives. Perfect for those who value quiet contemplation.</p>
+                <ul style="color: #5c4b7a; font-size: 0.9rem; line-height: 1.8;">
+                    <li>✓ High-speed Data Terminal Access</li>
+                    <li>✓ Sound-proofed reading nook</li>
+                    <li>✓ Therapeutic jade-infused bedding</li>
+                </ul>
+                <h3 style="color: #4a3b5a;">₱12,500 <span style="font-size: 0.8rem; font-weight: normal;">/ night</span></h3>
+                <a href="reservation.html" style="display: inline-block; padding: 10px 25px; background: #5c4b7a; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">BOOK NOW</a>
+            </div>
+        </section>
+
+        
+        <section style="display: flex; gap: 40px; margin-bottom: 80px; align-items: center; background: white; padding: 30px; border-radius: 15px; box-shadow: 12px 12px 0px #7e6b9e; border: 3px solid #d1c4e9;">
+            <div style="flex: 1; order: 2; position: relative; overflow: hidden; border-radius: 10px; height: 350px; border: 1px solid #eee;">
+                <div id="carousel2" style="display: flex; width: 300%; height: 100%; transition: transform 0.6s ease-in-out;">
+                    <img src="2bed.JPG" style="width: 33.33%; object-fit: cover;">
+                    <img src="2living.JPG" style="width: 33.33%; object-fit: cover;">
+                    <img src="2desk.JPG" style="width: 33.33%; object-fit: cover;">
+                </div>
+                <button onclick="move(2, -1)" style="position: absolute; top: 50%; left: 10px; transform: translateY(-50%); background: rgba(92,75,122,0.6); color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer;">❮</button>
+                <button onclick="move(2, 1)" style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%); background: rgba(92,75,122,0.6); color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer;">❯</button>
+            </div>
+            <div style="flex: 1; order: 1;">
+                <h2 style="color: #FF69B4; margin-top: 0;">Memorial Deluxe Suite</h2>
+                <p style="color: #6b5b7b;">A vibrant, pinkish retreat designed for capturing memories. Stylish, bright, and full of personality.</p>
+                <ul style="color: #5c4b7a; font-size: 0.9rem; line-height: 1.8;">
+                    <li>✓ Custom lighting for perfect photography</li>
+                    <li>✓ Complimentary instant camera & film</li>
+                    <li>✓ Aesthetic vanity and plush decor</li>
+                </ul>
+                <h3 style="color: #4a3b5a;">₱18,700 <span style="font-size: 0.8rem; font-weight: normal;">/ night</span></h3>
+                <a href="reservation.html" style="display: inline-block; padding: 10px 25px; background: #7e6b9e; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">BOOK NOW</a>
+            </div>
+        </section>
+
+       
+        <section style="display: flex; flex-direction: column; background: #fdfbff; padding: 40px; border-radius: 15px; box-shadow: 18px 18px 0px #4B0082; border: 4px solid #9370DB; margin-bottom: 50px;">
+            <div style="display: flex; gap: 40px; align-items: flex-start;">
+                <div style="flex: 1.5; position: relative; overflow: hidden; border-radius: 10px; height: 450px; border: 1px solid #d1c4e9;">
+                    <div id="carousel3" style="display: flex; width: 300%; height: 100%; transition: transform 0.6s ease-in-out;">
+                        <img src="3bed.JPG" style="width: 33.33%; object-fit: cover;">
+                        <img src="3living.JPG" style="width: 33.33%; object-fit: cover;">
+                        <img src="3bathtub.JPG" style="width: 33.33%; object-fit: cover;">
+                    </div>
+                    <button onclick="move(3, -1)" style="position: absolute; top: 50%; left: 10px; transform: translateY(-50%); background: rgba(75,0,130,0.6); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer;">❮</button>
+                    <button onclick="move(3, 1)" style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%); background: rgba(75,0,130,0.6); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer;">❯</button>
+                </div>
+                
+                <div style="flex: 1;">
+                    <div style="background: #9370DB; color: white; padding: 5px 15px; border-radius: 20px; display: inline-block; font-size: 0.7rem; font-weight: bold; margin-bottom: 10px;">PREMIUM SCHOLARSHIP</div>
+                    <h2 style="color: #4B0082; margin: 0 0 10px 0; font-size: 2rem;">Veritas Intellectual Suite</h2>
+                    <p style="color: #4a3b5a; font-style: italic; font-weight: bold;">SPECIAL NOTICE: Dr. Ratio will be conducting guest lectures during this period.</p>
+                    <p style="color: #6b5b7b;">The ultimate purple-themed luxury. This suite is where brilliance meets comfort, offering a marble-clad experience for the wise.</p>
+                    <ul style="color: #5c4b7a; font-size: 0.9rem; line-height: 1.8;">
+                        <li>✓ Marble bathtub with aromatherapy salts</li>
+                        <li>✓ Private library with rare manuscripts</li>
+                        <li>✓ **Exclusive chance for a private consultation with Dr. Ratio**</li>
+                    </ul>
+                    <h3 style="color: #4B0082; font-size: 1.8rem;">₱45,000 <span style="font-size: 0.9rem; font-weight: normal; color: #4a3b5a;">/ night</span></h3>
+                    <a href="reservation.html" style="display: block; text-align: center; padding: 15px; background: #4B0082; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; letter-spacing: 2px;">SECURE YOUR INTELLECT</a>
+                </div>
+
+                <div style="flex: 0.7;">
+                    <img src="dr-ratio.PNG" alt="Dr. Ratio Lightcone" style="width: 100%; border-radius: 10px; box-shadow: 8px 8px 0px rgba(75, 0, 130, 0.2); border: 3px solid #c3b1e1;">
+                    <p style="font-size: 0.65rem; text-align: center; color: #7e6b9e; margin-top: 10px; font-weight: bold;">SCHOLAR'S PRESENCE GUARANTEED</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer style="padding: 20px; text-align: center; background-color: #e9e4f0; border-top: 1px solid #d1c4e9;">
+        <p style="color: #7e6b9e; font-size: 0.6rem; letter-spacing: 2px; margin: 0; font-weight: bold;">&copy; 2026 LUNA VISTA RESORT | FUNDED BY AVENTURINE</p>
+    </footer>
+
+    <script>
+        let pos1 = 0, pos2 = 0, pos3 = 0;
+
+        function move(id, dir) {
+            if (id === 1) {
+                pos1 = (pos1 + dir + 3) % 3;
+                document.getElementById('carousel1').style.transform = `translateX(-${(pos1 * 100) / 3}%)`;
+            } else if (id === 2) {
+                pos2 = (pos2 + dir + 3) % 3;
+                document.getElementById('carousel2').style.transform = `translateX(-${(pos2 * 100) / 3}%)`;
+            } else if (id === 3) {
+                pos3 = (pos3 + dir + 3) % 3;
+                document.getElementById('carousel3').style.transform = `translateX(-${(pos3 * 100) / 3}%)`;
+            }
+        }
+        setInterval(() => { move(1, 1); move(2, 1); move(3, 1); }, 5000);
+    </script>
+</body>
+</html>

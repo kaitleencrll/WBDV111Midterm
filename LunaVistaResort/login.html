@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Log In</title>
+</head>
+<body style="margin: 0; padding: 0; height: 100vh; width: 100vw; font-family: 'Trebuchet MS', sans-serif; overflow: hidden; display: flex; flex-direction: column; align-items: center;">
+
+
+    <video autoplay muted loop style="position: fixed; right: 0; bottom: 0; min-width: 100%; min-height: 100%; z-index: -1; object-fit: cover;">
+        <source src="resort.mov" type="video/mp4">
+    </video>
+
+  
+    <nav style="position: fixed; top: 0; width: 100%; height: 80px; display: flex; justify-content: space-between; align-items: center; padding: 0 50px; box-sizing: border-box; z-index: 1000; background: linear-gradient(to bottom, rgba(43, 0, 82, 0.3) 0%, rgba(43, 0, 82, 0) 100%);">
+        
+        <a href="home.html">
+            <img src="logo.png" alt="Luna Vista Logo" style="height: 45px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));">
+        </a>
+
+        <div style="display: flex; gap: 35px; align-items: center;">
+            <a href="home.html" style="text-decoration: none; color: white; display: flex; flex-direction: column; align-items: center; font-size: 9px; font-weight: bold; text-shadow: 1px 1px 3px rgba(0,0,0,0.5);">
+                <img src="house.png" width="20" style="margin-bottom: 2px;"> HOME
+            </a>
+            <a href="gallery.html" style="text-decoration: none; color: white; display: flex; flex-direction: column; align-items: center; font-size: 9px; font-weight: bold; text-shadow: 1px 1px 3px rgba(0,0,0,0.5);">
+                <img src="gallery.png" width="20" style="margin-bottom: 2px;"> GALLERY
+            </a>
+            <a href="reservation.html" style="text-decoration: none; color: white; display: flex; flex-direction: column; align-items: center; font-size: 9px; font-weight: bold; text-shadow: 1px 1px 3px rgba(0,0,0,0.5);">
+                <img src="reserve.png" width="20" style="margin-bottom: 2px;"> RESERVATION
+            </a>
+            <a href="login.html" style="text-decoration: none; color: #ffcc00; display: flex; flex-direction: column; align-items: center; font-size: 9px; font-weight: bold; text-shadow: 1px 1px 3px rgba(0,0,0,0.5);">
+                <img src="profile.png" width="20" style="margin-bottom: 2px;"> LOG IN
+            </a>
+        </div>
+    </nav>
+
+ 
+    <div style="flex-grow: 1; display: flex; justify-content: center; align-items: center; width: 100%;">
+        <div style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 30px; padding: 60px 50px; width: 450px; box-shadow: 0 8px 32px 0 rgba(43, 0, 82, 0.25); text-align: center; color: white; display: flex; flex-direction: column; align-items: center;">
+            
+            <img src="logo.png" style="width: 400px; height: auto; margin-bottom: 15px; margin-top: -25px;">
+            
+            <h3 style="margin-top: -5px; font-weight: 300; letter-spacing: 1px; color: #FFFDD0; font-size: 1.8rem;">Enter the Glow!</h3>
+            
+            <form action="home.html" style="width: 100%; display: flex; flex-direction: column; gap: 25px;">
+                <input type="email" placeholder="Email Address" required style="padding: 15px 20px; font-size: 16px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.5); background: rgba(255, 255, 255, 0.2); color: white; outline: none;">
+                
+                <input type="password" placeholder="Password" required style="padding: 15px 20px; font-size: 16px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.5); background: rgba(255, 255, 255, 0.2); color: white; outline: none;">
+                
+                <button type="submit" style="background-color: #D8BFD8; color: #4B0082; padding: 15px; border: none; border-radius: 30px; font-weight: bold; font-size: 18px; cursor: pointer; transition: 0.3s; width: 100%; box-shadow: 0 4px 12px rgba(43, 0, 82, 0.2);">SIGN IN</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
