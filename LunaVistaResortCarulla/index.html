@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <style>
+        .nav-link { transition: all 0.3s ease; }
+        .nav-link:hover { transform: translateY(-3px); filter: brightness(1.2); }
+        
+        .carousel-btn { transition: background 0.3s ease, transform 0.2s ease; }
+        .carousel-btn:hover { background: rgba(92, 75, 122, 0.8) !important; transform: translateY(-50%) scale(1.1); }
+
+        #carouselContainer { transition: transform 0.4s ease, box-shadow 0.4s ease; }
+        #carouselContainer:hover { transform: translateY(-5px); box-shadow: 15px 20px 30px rgba(92, 75, 122, 0.2); }
+    </style>
+</head>
+<body style="margin: 0; padding: 0; background-color: #faf9ff; font-family: 'Trebuchet MS', sans-serif; color: #4a3b5a; overflow-x: hidden; min-height: 100vh; display: flex; flex-direction: column;">
+
+    <nav style="background: linear-gradient(to right, #5c4b7a, #7e6b9e); padding: 5px 50px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; flex-shrink: 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <a href="index.html">
+            <img src="logo.png" alt="Luna Vista Logo" style="height: 45px; filter: drop-shadow(0px 3px 6px rgba(43, 0, 82, 0.5));">
+        </a>
+
+        <div style="display: flex; gap: 35px; align-items: center;">
+            <a href="index.html" class="nav-link" style="text-decoration: none; color: #f4d03f; display: flex; flex-direction: column; align-items: center; font-size: 9px; font-weight: bold;">
+                <img src="house.png" width="20" style="margin-bottom: 2px;"> HOME
+            </a>
+            <a href="gallery.html" class="nav-link" style="text-decoration: none; color: #e9e4f0; display: flex; flex-direction: column; align-items: center; font-size: 9px; font-weight: bold;">
+                <img src="gallery.png" width="20" style="margin-bottom: 2px;"> GALLERY
+            </a>
+            <a href="reservation.html" class="nav-link" style="text-decoration: none; color: #e9e4f0; display: flex; flex-direction: column; align-items: center; font-size: 9px; font-weight: bold;">
+                <img src="reserve.png" width="20" style="margin-bottom: 2px;"> RESERVATION
+            </a>
+            <a href="login.html" class="nav-link" style="text-decoration: none; color: #e9e4f0; display: flex; flex-direction: column; align-items: center; font-size: 9px; font-weight: bold;">
+                <img src="profile.png" width="20" style="margin-bottom: 2px;"> LOG IN
+            </a>
+        </div>
+    </nav>
+
+    <div style="background: radial-gradient(circle at center, #ffffff 0%, #f4f1f9 100%); flex-grow: 1; display: flex; flex-direction: column;">
+        <header style="width: 100%; flex-shrink: 0; line-height: 0;">
+            <img src="banner.PNG" alt="Welcome Banner" style="width: 100%; height: auto; display: block; filter: brightness(1.02);">
+        </header>
+
+        <main style="flex-grow: 1; display: flex; align-items: center; justify-content: center; padding: 60px 8%; gap: 60px; position: relative;">
+            
+            <div style="position: absolute; left: 5%; top: 10%; width: 250px; height: 250px; background: rgba(147, 112, 219, 0.08); border-radius: 50%; z-index: 0;"></div>
+
+            <div style="flex: 1.2; max-width: 550px; z-index: 1; background: rgba(255, 255, 255, 0.85); padding: 40px; border-radius: 20px; border: 1.5px solid #d1c4e9; box-shadow: 0 10px 30px rgba(92, 75, 122, 0.1); backdrop-filter: blur(10px);">
+                <h4 style="color: #8e7caf; letter-spacing: 4px; margin-bottom: 10px; font-size: 0.9rem; border-left: 4px solid #9370DB; padding-left: 15px;">WELCOME TO THE VISTA</h4>
+                <h1 style="color: #4a3b5a; font-size: 3rem; margin: 0 0 20px 0; line-height: 1.1; font-weight: bold;">
+                    <span style="color: #7e6b9e;">The Sanctuary of</span> <br> <span style="color: #9370DB;">Amphoreus</span>
+                </h1>
+                <p style="font-size: 1.2rem; line-height: 1.8; color: #6b5b7b; margin-bottom: 25px;">
+                    Located in the mystical heart of <strong style="color: #9370DB;">Amphoreus</strong>, Luna Vista Resort is a testament to elegance and intellect. 
+                    Exclusively funded by <strong style="color: #5F9EA0;">Aventurine</strong> for the brilliant <strong style="color: #4B0082;">Dr. Ratio</strong>, 
+                    our resort offers a refined escape for those who seek knowledge and luxury in equal measure.
+                </p>
+                <div style="height: 4px; width: 80px; background: linear-gradient(to right, #9370DB, #5c4b7a); border-radius: 2px;"></div>
+            </div>
+
+            <div style="flex: 1.8; max-width: 800px; position: relative;">
+                <div id="carouselContainer" style="width: 100%; height: 420px; position: relative; overflow: hidden; border-radius: 15px; border: 1px solid rgba(126, 107, 158, 0.2); box-shadow: 20px 20px 0px 0px #5c4b7a;">
+                    
+                    <button class="carousel-btn" onclick="moveManual(-1)" style="position: absolute; top: 50%; left: 0; transform: translateY(-50%); background: rgba(92, 75, 122, 0.5); backdrop-filter: blur(3px); color: white; border: none; padding: 20px 15px; cursor: pointer; z-index: 10; font-size: 24px; border-radius: 0 8px 8px 0; outline: none;">❮</button>
+                    
+                    <button class="carousel-btn" onclick="moveManual(1)" style="position: absolute; top: 50%; right: 0; transform: translateY(-50%); background: rgba(92, 75, 122, 0.5); backdrop-filter: blur(3px); color: white; border: none; padding: 20px 15px; cursor: pointer; z-index: 10; font-size: 24px; border-radius: 8px 0 0 8px; outline: none;">❯</button>
+
+                    <div id="wrapper" style="display: flex; width: 600%; height: 100%; transition: transform 0.9s cubic-bezier(0.23, 1, 0.32, 1);">
+                        <div style="min-width: calc(100% / 6); height: 100%;"><img src="main1.PNG" style="width: 100%; height: 100%; object-fit: cover;"></div>
+                        <div style="min-width: calc(100% / 6); height: 100%;"><img src="main2.PNG" style="width: 100%; height: 100%; object-fit: cover;"></div>
+                        <div style="min-width: calc(100% / 6); height: 100%;"><img src="main3.PNG" style="width: 100%; height: 100%; object-fit: cover;"></div>
+                        <div style="min-width: calc(100% / 6); height: 100%;"><img src="main4.PNG" style="width: 100%; height: 100%; object-fit: cover;"></div>
+                        <div style="min-width: calc(100% / 6); height: 100%;"><img src="main5.PNG" style="width: 100%; height: 100%; object-fit: cover;"></div>
+                        <div style="min-width: calc(100% / 6); height: 100%;"><img src="main6.PNG" style="width: 100%; height: 100%; object-fit: cover;"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer style="padding: 25px; text-align: center; background-color: #f0ecf7; border-top: 1px solid #d1c4e9; flex-shrink: 0;">
+        <p style="color: #7e6b9e; font-size: 0.7rem; letter-spacing: 3px; margin: 0; font-weight: bold; text-transform: uppercase;">&copy; 2026 LUNA VISTA RESORT | FUNDED BY AVENTURINE</p>
+    </footer>
+
+    <script>
+        let currentPos = 0;
+        const wrapper = document.getElementById('wrapper');
+        let autoPlay = setInterval(nextSlide, 4000);
+
+        function nextSlide() {
+            currentPos = (currentPos + 1) % 6;
+            updateSlide();
+        }
+
+        function moveManual(direction) {
+            clearInterval(autoPlay);
+            currentPos += direction;
+            if (currentPos > 5) currentPos = 0;
+            if (currentPos < 0) currentPos = 5;
+            updateSlide();
+            autoPlay = setInterval(nextSlide, 4000);
+        }
+
+        function updateSlide() {
+            wrapper.style.transform = `translateX(-${(currentPos * 100) / 6}%)`;
+        }
+    </script>
+</body>
+</html>

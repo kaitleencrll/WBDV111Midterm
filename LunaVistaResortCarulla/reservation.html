@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reservation</title>
+    <style>
+        .nav-link { transition: all 0.3s ease; }
+        .nav-link:hover { transform: translateY(-3px); filter: brightness(1.2); }
+        
+        .form-input { transition: border-color 0.3s ease, box-shadow 0.3s ease; outline: none; }
+        .form-input:focus { border-color: #9370DB !important; box-shadow: 0 0 10px rgba(147, 112, 219, 0.3); }
+
+        .submit-btn { transition: all 0.3s ease; cursor: pointer; }
+        .submit-btn:hover { background: #4B0082 !important; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+
+        .carousel-btn { transition: background 0.3s ease; }
+        .carousel-btn:hover { background: rgba(92,75,122,0.9) !important; }
+
+        .bg-blob {
+            position: fixed; border-radius: 50%; filter: blur(80px); z-index: -1; opacity: 0.4;
+        }
+    </style>
+</head>
+<body style="margin: 0; padding: 0; background-color: #faf9ff; background-image: radial-gradient(#d1c4e9 0.8px, transparent 0.8px); background-size: 40px 40px; font-family: 'Trebuchet MS', sans-serif; color: #4a3b5a; min-height: 100vh; display: flex; flex-direction: column;">
+
+    <div class="bg-blob" style="width: 400px; height: 400px; background: #9370DB; top: -100px; right: -100px;"></div>
+    <div class="bg-blob" style="width: 300px; height: 300px; background: #5c4b7a; bottom: -50px; left: -50px;"></div>
+
+    <nav style="background: linear-gradient(to right, #5c4b7a, #7e6b9e); padding: 5px 50px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(43, 0, 82, 0.05); box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <a href="index.html">
+            <img src="logo.png" alt="Luna Vista Logo" style="height: 45px; filter: drop-shadow(0px 3px 6px rgba(43, 0, 82, 0.5));">
+        </a>
+        <div style="display: flex; gap: 35px; align-items: center;">
+            <a href="index.html" class="nav-link" style="text-decoration: none; color: #e9e4f0; display: flex; flex-direction: column; align-items: center; font-size: 9px; font-weight: bold;">
+                <img src="house.png" width="20" style="margin-bottom: 2px;"> HOME
+            </a>
+            <a href="gallery.html" class="nav-link" style="text-decoration: none; color: #e9e4f0; display: flex; flex-direction: column; align-items: center; font-size: 9px; font-weight: bold;">
+                <img src="gallery.png" width="20" style="margin-bottom: 2px;"> GALLERY
+            </a>
+            <a href="reservation.html" class="nav-link" style="text-decoration: none; color: #f4d03f; display: flex; flex-direction: column; align-items: center; font-size: 9px; font-weight: bold;">
+                <img src="reserve.png" width="20" style="margin-bottom: 2px;"> RESERVATION
+            </a>
+            <a href="login.html" class="nav-link" style="text-decoration: none; color: #e9e4f0; display: flex; flex-direction: column; align-items: center; font-size: 9px; font-weight: bold;">
+                <img src="profile.png" width="20" style="margin-bottom: 2px;"> LOG IN
+            </a>
+        </div>
+    </nav>
+
+    <main style="max-width: 1400px; width: 92%; margin: 50px auto; display: flex; gap: 60px; align-items: flex-start; padding-bottom: 80px;">
+        
+        <section style="flex: 1.5; background: rgba(255, 255, 255, 0.8); border-radius: 24px; border: 1px solid rgba(209, 196, 233, 0.5); box-shadow: 20px 20px 0px #5c4b7a; overflow: hidden; backdrop-filter: blur(12px); position: sticky; top: 100px;">
+            <div style="position: relative; width: 100%; height: 550px; overflow: hidden;">
+                <div id="resCarousel" style="display: flex; width: 300%; height: 100%; transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);">
+                    <img src="1bed.JPG" style="width: 33.33%; object-fit: cover;">
+                    <img src="2bed.JPG" style="width: 33.33%; object-fit: cover;">
+                    <img src="3bed.JPG" style="width: 33.33%; object-fit: cover;">
+                </div>
+                <button class="carousel-btn" onclick="moveRes(-1)" style="position: absolute; top: 50%; left: 20px; transform: translateY(-50%); background: rgba(92,75,122,0.8); color: white; border: none; border-radius: 50%; width: 55px; height: 55px; cursor: pointer; font-size: 24px; z-index: 5;">❮</button>
+                <button class="carousel-btn" onclick="moveRes(1)" style="position: absolute; top: 50%; right: 20px; transform: translateY(-50%); background: rgba(92,75,122,0.8); color: white; border: none; border-radius: 50%; width: 55px; height: 55px; cursor: pointer; font-size: 24px; z-index: 5;">❯</button>
+            </div>
+            <div style="padding: 35px; text-align: center; background: rgba(255,255,255,0.5);">
+                <h2 id="roomTitle" style="margin: 0; color: #2E8B57; font-size: 2.2rem; transition: color 0.4s ease;">Archives Standard Room</h2>
+                <p id="roomDesc" style="color: #6b5b7b; font-size: 1.25rem; margin: 15px 0 0 0;">A serene, greenish sanctuary inspired by quiet contemplation.</p>
+            </div>
+        </section>
+
+        <section style="flex: 1; background: rgba(255, 255, 255, 0.9); padding: 45px; border-radius: 24px; border: 1px solid #d1c4e9; box-shadow: -20px 20px 0px #7e6b9e; backdrop-filter: blur(10px);">
+            <h1 style="margin-top: 0; color: #4B0082; font-size: 2.5rem; margin-bottom: 12px;">Reservation Form</h1>
+            <p style="color: #6b5b7b; margin-bottom: 35px; font-size: 1.1rem;">Complete your details to secure your stay.</p>
+
+            <form style="display: flex; flex-direction: column; gap: 20px;" onsubmit="event.preventDefault(); alert('Reservation recorded! Returning to home page...'); window.location.href='index.html';">
+                <div>
+                    <label style="display: block; font-weight: bold; margin-bottom: 10px; font-size: 0.9rem; color: #7e6b9e; letter-spacing: 1px;">FULL NAME</label>
+                    <input type="text" class="form-input" placeholder="Dr. Veritas Ratio" style="width: 100%; padding: 14px; border: 2px solid #e9e4f0; border-radius: 10px; box-sizing: border-box;" required>
+                </div>
+
+                <div style="display: flex; gap: 20px;">
+                    <div style="flex: 1.5;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 10px; font-size: 0.9rem; color: #7e6b9e; letter-spacing: 1px;">EMAIL</label>
+                        <input type="email" class="form-input" placeholder="ratio@guild.com" style="width: 100%; padding: 14px; border: 2px solid #e9e4f0; border-radius: 10px; box-sizing: border-box;" required>
+                    </div>
+                    <div style="flex: 1;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 10px; font-size: 0.9rem; color: #7e6b9e; letter-spacing: 1px;">PHONE</label>
+                        <input type="tel" class="form-input" placeholder="0912 345 6789" style="width: 100%; padding: 14px; border: 2px solid #e9e4f0; border-radius: 10px; box-sizing: border-box;" required>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 20px;">
+                    <div style="flex: 1;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 10px; font-size: 0.9rem; color: #7e6b9e; letter-spacing: 1px;">CHECK-IN</label>
+                        <input type="date" class="form-input" style="width: 100%; padding: 14px; border: 2px solid #e9e4f0; border-radius: 10px; box-sizing: border-box;" required>
+                    </div>
+                    <div style="flex: 1;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 10px; font-size: 0.9rem; color: #7e6b9e; letter-spacing: 1px;">CHECK-OUT</label>
+                        <input type="date" class="form-input" style="width: 100%; padding: 14px; border: 2px solid #e9e4f0; border-radius: 10px; box-sizing: border-box;" required>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 20px;">
+                    <div style="flex: 1.5;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 10px; font-size: 0.9rem; color: #7e6b9e; letter-spacing: 1px;">ROOM TYPE</label>
+                        <select class="form-input" style="width: 100%; padding: 14px; border: 2px solid #e9e4f0; border-radius: 10px; box-sizing: border-box;" required>
+                            <option value="0">Archives Standard Room</option>
+                            <option value="1">Memorial Deluxe Suite</option>
+                            <option value="2">Veritas Intellectual Suite</option>
+                        </select>
+                    </div>
+                    <div style="flex: 0.5;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 10px; font-size: 0.9rem; color: #7e6b9e; letter-spacing: 1px;">GUESTS</label>
+                        <input type="number" min="1" max="12" value="1" class="form-input" style="width: 100%; padding: 14px; border: 2px solid #e9e4f0; border-radius: 10px; box-sizing: border-box;" required>
+                    </div>
+                </div>
+
+                <div>
+                    <label style="display: block; font-weight: bold; margin-bottom: 10px; font-size: 0.9rem; color: #7e6b9e; letter-spacing: 1px;">SPECIAL REQUESTS</label>
+                    <textarea class="form-input" rows="3" placeholder="Dietary needs, Dr. Ratio consultation, etc." style="width: 100%; padding: 14px; border: 2px solid #e9e4f0; border-radius: 10px; box-sizing: border-box; resize: none; font-family: 'Trebuchet MS', sans-serif;"></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn" style="width: 100%; padding: 20px; background: #5c4b7a; color: white; border: none; border-radius: 12px; font-weight: bold; font-size: 1.2rem; letter-spacing: 2px; margin-top: 10px;">CONFIRM RESERVATION</button>
+            </form>
+        </section>
+    </main>
+
+    <footer style="padding: 40px; text-align: center; background-color: #f0ecf7; border-top: 1px solid #d1c4e9; margin-top: auto;">
+        <p style="color: #7e6b9e; font-size: 0.8rem; letter-spacing: 3px; margin: 0; font-weight: bold; text-transform: uppercase;">&copy; 2026 LUNA VISTA RESORT | FUNDED BY AVENTURINE</p>
+    </footer>
+
+    <script>
+        let resPos = 0;
+        const rooms = [
+            { title: "Archives Standard Room", desc: "A serene, greenish sanctuary inspired by quiet contemplation.", color: "#2E8B57" },
+            { title: "Memorial Deluxe Suite", desc: "A vibrant retreat designed for capturing precious memories.", color: "#FF69B4" },
+            { title: "Veritas Intellectual Suite", desc: "Premium purple-clad luxury for the truly brilliant scholar.", color: "#4B0082" }
+        ];
+
+        function moveRes(dir) {
+            resPos = (resPos + dir + 3) % 3;
+            document.getElementById('resCarousel').style.transform = `translateX(-${(resPos * 100) / 3}%)`;
+            const titleEl = document.getElementById('roomTitle');
+            titleEl.innerText = rooms[resPos].title;
+            titleEl.style.color = rooms[resPos].color;
+            document.getElementById('roomDesc').innerText = rooms[resPos].desc;
+        }
+
+        setInterval(() => moveRes(1), 10000);
+    </script>
+</body>
+</html>
