@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register</title>
+    <style>
+        .bg-animate {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; overflow: hidden; background: #0b0e11;
+        }
+        .note {
+            position: absolute; color: rgba(0, 242, 255, 0.4); 
+            font-size: 38px; font-weight: bold;
+            animation: float 6s linear infinite; bottom: -60px;
+        }
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.9; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+        .register-box {
+            position: relative; background-color: rgba(26, 29, 35, 0.85); 
+            border: 4px solid #ff8c00; width: 420px; padding: 50px 0; 
+            display: flex; flex-direction: column; align-items: center; 
+            border-radius: 50px; box-shadow: 0 0 40px rgba(255, 140, 0, 0.3); 
+            backdrop-filter: blur(15px); transition: 0.4s ease;
+        }
+        .register-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 60px rgba(0, 242, 255, 0.5);
+            border-color: #00f2ff;
+        }
+        .glow-line {
+            width: 100%; height: 2px; background: linear-gradient(90deg, transparent, #00f2ff, transparent);
+            margin: 20px 0; opacity: 0.5; transition: 0.4s;
+        }
+        .register-box:hover .glow-line {
+            background: linear-gradient(90deg, transparent, #ff8c00, transparent);
+            opacity: 0.8;
+        }
+        input:focus {
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.5);
+            border: 2px solid #00f2ff !important;
+            transform: scale(1.03);
+        }
+        .register-btn {
+            width: 150px; align-self: center; padding: 12px; border-radius: 25px; 
+            border: none; background-color: #00f2ff; color: #0b0e11; 
+            font-weight: bold; cursor: pointer; transition: 0.4s; 
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.3);
+            margin-top: 10px;
+        }
+        .register-btn:hover {
+            background-color: #ff8c00;
+            box-shadow: 0 0 25px #ff8c00;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body style="margin: 0; font-family: 'Trebuchet MS'; display: flex; justify-content: center; align-items: center; min-height: 100vh; border: 5px solid #001f3f; box-sizing: border-box; overflow: hidden;">
+
+<div class="bg-animate" id="notes-container"></div>
+
+<div class="register-box">
+    <img src="logo.png" style="width: 200px; height: auto; filter: drop-shadow(0 0 10px rgba(0, 242, 255, 0.3));">
+    
+    <div class="glow-line"></div>
+
+    <h3 style="margin: -10px 0 30px 0; color: white; text-shadow: 0 0 10px rgba(0, 242, 255, 0.4);">Join the Beat!</h3>
+    
+    <form action="login.html" style="width: 80%; display: flex; flex-direction: column; gap: 15px;">
+        <input type="text" placeholder="Full Name" required style="padding: 12px; border-radius: 10px; border: 2px solid rgba(0, 242, 255, 0.2); background: rgba(0,0,0,0.4); color: white; outline: none; transition: 0.3s;">
+        <input type="email" placeholder="Email" required style="padding: 12px; border-radius: 10px; border: 2px solid rgba(0, 242, 255, 0.2); background: rgba(0,0,0,0.4); color: white; outline: none; transition: 0.3s;">
+        <input type="password" placeholder="Create Password" required style="padding: 12px; border-radius: 10px; border: 2px solid rgba(0, 242, 255, 0.2); background: rgba(0,0,0,0.4); color: white; outline: none; transition: 0.3s;">
+        <input type="password" placeholder="Confirm Password" required style="padding: 12px; border-radius: 10px; border: 2px solid rgba(0, 242, 255, 0.2); background: rgba(0,0,0,0.4); color: white; outline: none; transition: 0.3s;">
+        
+        <button type="submit" class="register-btn">Register</button>
+        
+        <div style="text-align: center; font-size: 14px; margin-top: 10px;">
+            <span style="color: lightgrey;">Already a member? <a href="login.html" style="color: #00f2ff; font-weight: bold; text-decoration: none; text-shadow: 0 0 5px #00f2ff;">Log In</a></span>
+        </div>
+    </form>
+</div>
+
+<script>
+    const container = document.getElementById('notes-container');
+    const noteIcons = ['♪', '♫', '♬', '♩'];
+    for(let i=0; i<35; i++) {
+        let n = document.createElement('div');
+        n.className = 'note';
+        n.innerText = noteIcons[Math.floor(Math.random() * noteIcons.length)];
+        n.style.left = Math.random() * 100 + "vw";
+        n.style.animationDelay = Math.random() * 6 + "s";
+        container.appendChild(n);
+    }
+</script>
+
+</body>
+</html>
