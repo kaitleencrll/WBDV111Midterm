@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>StockMaster | Industrial Inventory</title>
+    <style>
+        @keyframes pulse-red {
+            0% { background-color: #fff5f5; }
+            50% { background-color: #ffdce0; }
+            100% { background-color: #fff5f5; }
+        }
+        @keyframes scanline {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(500%); }
+        }
+        .low-stock-row {
+            animation: pulse-red 2s infinite;
+        }
+        .nav-item {
+            transition: 0.2s ease-in-out;
+            border-bottom: 0px solid #f39c12;
+        }
+        .nav-item:hover {
+            background: rgba(243, 156, 18, 0.15) !important;
+            color: #fff !important;
+            border-bottom: 4px solid #f39c12 !important;
+        }
+        .action-btn {
+            transition: 0.2s;
+            cursor: pointer;
+        }
+        .action-btn:hover {
+            background: #f39c12 !important;
+            color: #111 !important;
+            box-shadow: 0 0 15px rgba(243, 156, 18, 0.4);
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #111;
+        }
+        img {
+            object-fit: cover;
+            border: 1px solid #111;
+        }
+    </style>
+</head>
+
+<body style="margin:0; font-family: 'Segoe UI', sans-serif; background-color:#f0f2f5; color: #1a1a1a; height: 100vh; display: flex; flex-direction: column; overflow: hidden;">
+
+    <nav style="width: 100%; background: #0a0a0a; height: 65px; display: flex; align-items: center; justify-content: space-between; border-bottom: 4px solid #f39c12; z-index: 100; flex-shrink: 0;">
+        
+        <div style="padding: 0 30px; display: flex; align-items: center; gap: 15px; position: relative; overflow: hidden;">
+            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: rgba(243, 156, 18, 0.4); animation: scanline 2s linear infinite;"></div>
+            <div style="display: inline-flex; gap: 2px; height: 20px; align-items: flex-end;">
+                <div style="width:4px; height:100%; background:#fff;"></div>
+                <div style="width:7px; height:100%; background:#f39c12;"></div>
+                <div style="width:3px; height:80%; background:#fff;"></div>
+            </div>
+            <h2 style="margin:0; font-size: 20px; color: #fff; letter-spacing: 3px; font-weight: 900; text-transform: uppercase;">StockMaster</h2>
+        </div>
+
+        <div style="display: flex; height: 100%;">
+            <a href="index.html" class="nav-item" style="color:#f39c12; text-decoration:none; display:flex; align-items:center; padding:0 40px; font-weight:700; background:rgba(243, 156, 18, 0.1); border-bottom: 4px solid #f39c12;">STOCK</a>
+            <a href="suppliers.html" class="nav-item" style="color:#888; text-decoration:none; display:flex; align-items:center; padding:0 40px;">SUPPLIERS</a>
+            <a href="orders.html" class="nav-item" style="color:#888; text-decoration:none; display:flex; align-items:center; padding:0 40px;">ORDERS</a>
+            <a href="reports.html" class="nav-item" style="color:#888; text-decoration:none; display:flex; align-items:center; padding:0 40px;">REPORTS</a>
+            <a href="login.html" class="nav-item" style="color:#fff; text-decoration:none; display:flex; align-items:center; padding:0 40px; font-weight: 800; background: #222;">LOG IN</a>
+        </div>
+    </nav>
+
+    <div style="flex-grow: 1; padding: 20px; display: flex; flex-direction: column; overflow: hidden; box-sizing: border-box;">
+        
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 15px; flex-shrink: 0;">
+            <div style="display: flex; align-items: baseline; gap: 15px;">
+                <h1 style="margin:0; font-size: 26px; font-weight:900; text-transform:uppercase; letter-spacing: -1px;">Inventory Dashboard</h1>
+                <span style="color:#27ae60; font-weight:bold; font-size: 11px; font-family: monospace;">● SYSTEM_ACTIVE</span>
+            </div>
+            <button class="action-btn" style="padding:12px 30px; background:#111; color:#f39c12; border:none; font-weight:900; font-size:12px; text-transform:uppercase; border-bottom: 3px solid #f39c12;">
+                + Scan Item
+            </button>
+        </div>
+
+        <div style="background:white; border:2px solid #111; flex-grow: 1; overflow-y: auto; box-shadow: 10px 10px 0px rgba(0,0,0,0.05);">
+            <table style="width:100%; border-collapse:collapse; text-align:left; font-size: 15px;">
+                <thead style="background:#111; color:#fff; position: sticky; top: 0; z-index: 10;">
+                    <tr>
+                        <th style="padding:18px 25px; width: 100px;">Visual</th>
+                        <th style="padding:18px 25px;">Product Descriptor</th>
+                        <th style="padding:18px 25px; width: 150px;">Quantity</th>
+                        <th style="padding:18px 25px; width: 150px;">Threshold</th>
+                        <th style="padding:18px 25px; text-align: center; width: 200px;">System Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom:1px solid #eee;" onmouseover="this.style.background='#f9f9f9'" onmouseout="this.style.background='white'">
+                        <td style="padding:10px 25px;"><img src="https://boholonlinestore.com/wp-content/uploads/2017/01/nestle_fresh_milk_1l.jpg" style="width:60px; height:60px;"></td>
+                        <td style="padding:10px 25px;"><span style="font-size: 18px; font-weight: 800;">Fresh Milk 1L</span><br><small style="color:#aaa;">SKU 1001</small></td>
+                        <td style="padding:10px 25px; font-family: monospace; font-size: 20px; font-weight: bold;">48</td>
+                        <td style="padding:10px 25px; color:#888; font-weight: bold;">Min 10</td>
+                        <td style="padding:10px 25px; text-align: center;"><button class="action-btn" onclick="window.location.href='orders.html'" style="background:#111; color:#fff; border:none; padding:10px 25px; font-weight:900; font-size:11px; text-transform:uppercase;">Manage</button></td>
+                    </tr>
+                    <tr class="low-stock-row" style="border-bottom:1px solid #eee;">
+                        <td style="padding:10px 25px;"><img src="https://img.freepik.com/free-photo/whole-wheat-bread-white_1339-8026.jpg" style="width:60px; height:60px; border-color: #e74c3c;"></td>
+                        <td style="padding:10px 25px;"><span style="font-size: 18px; font-weight: 800; color: #e74c3c;">Artisan Bread</span><br><small style="color:#aaa;">SKU 1002</small></td>
+                        <td style="padding:10px 25px; font-family: monospace; font-size: 20px; color:#e74c3c; font-weight:bold;">04</td>
+                        <td style="padding:10px 25px; color:#e74c3c; font-weight: bold;">Min 15</td>
+                        <td style="padding:10px 25px; text-align: center;"><button class="action-btn" onclick="window.location.href='suppliers.html'" style="background:#e74c3c; color:white; border:none; padding:10px 25px; font-weight:900; font-size:11px; text-transform:uppercase;">Alert</button></td>
+                    </tr>
+                    <tr style="border-bottom:1px solid #eee;" onmouseover="this.style.background='#f9f9f9'" onmouseout="this.style.background='white'">
+                        <td style="padding:10px 25px;"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkwruo_TlQJ3QTH4ELUPoJuhHovchcdTCz_A&s" style="width:60px; height:60px;"></td>
+                        <td style="padding:10px 25px;"><span style="font-size: 18px; font-weight: 800;">Organic Oranges</span><br><small style="color:#aaa;">SKU 1003</small></td>
+                        <td style="padding:10px 25px; font-family: monospace; font-size: 20px; font-weight: bold;">120</td>
+                        <td style="padding:10px 25px; color:#888; font-weight: bold;">Min 50</td>
+                        <td style="padding:10px 25px; text-align: center;"><button class="action-btn" onclick="window.location.href='orders.html'" style="background:#111; color:#fff; border:none; padding:10px 25px; font-weight:900; font-size:11px; text-transform:uppercase;">Manage</button></td>
+                    </tr>
+                    <tr class="low-stock-row" style="border-bottom:1px solid #eee;">
+                        <td style="padding:10px 25px;"><img src="https://media.istockphoto.com/id/688499062/photo/roasted-coffee-bean.jpg?s=612x612&w=0&k=20&c=qMJdothxrUwErOJg3wtlwgOOdf927RuH3wye8qDfd4Y=" style="width:60px; height:60px; border-color: #e74c3c;"></td>
+                        <td style="padding:10px 25px;"><span style="font-size: 18px; font-weight: 800; color: #e74c3c;">Coffee Beans</span><br><small style="color:#aaa;">SKU 1004</small></td>
+                        <td style="padding:10px 25px; font-family: monospace; font-size: 20px; color:#e74c3c; font-weight:bold;">02</td>
+                        <td style="padding:10px 25px; color:#e74c3c; font-weight: bold;">Min 12</td>
+                        <td style="padding:10px 25px; text-align: center;"><button class="action-btn" onclick="window.location.href='suppliers.html'" style="background:#e74c3c; color:white; border:none; padding:10px 25px; font-weight:900; font-size:11px; text-transform:uppercase;">Alert</button></td>
+                    </tr>
+                    <tr style="border-bottom:1px solid #eee;" onmouseover="this.style.background='#f9f9f9'" onmouseout="this.style.background='white'">
+                        <td style="padding:10px 25px;"><img src="https://delivery.lenoxhotelph.com/wp-content/uploads/2025/02/le-mineral.jpg" style="width:60px; height:60px;"></td>
+                        <td style="padding:10px 25px;"><span style="font-size: 18px; font-weight: 800;">Mineral Water</span><br><small style="color:#aaa;">SKU 1005</small></td>
+                        <td style="padding:10px 25px; font-family: monospace; font-size: 20px; font-weight: bold;">250</td>
+                        <td style="padding:10px 25px; color:#888; font-weight: bold;">Min 100</td>
+                        <td style="padding:10px 25px; text-align: center;"><button class="action-btn" onclick="window.location.href='orders.html'" style="background:#111; color:#fff; border:none; padding:10px 25px; font-weight:900; font-size:11px; text-transform:uppercase;">Manage</button></td>
+                    </tr>
+                    <tr style="border-bottom:1px solid #eee;" onmouseover="this.style.background='#f9f9f9'" onmouseout="this.style.background='white'">
+                        <td style="padding:10px 25px;"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjwvHUlGsHKlBfSb64sZTLpjpAC8BwKKJ4hQ&s" style="width:60px; height:60px;"></td>
+                        <td style="padding:10px 25px;"><span style="font-size: 18px; font-weight: 800;">Greek Yogurt</span><br><small style="color:#aaa;">SKU 1006</small></td>
+                        <td style="padding:10px 25px; font-family: monospace; font-size: 20px; font-weight: bold;">15</td>
+                        <td style="padding:10px 25px; color:#888; font-weight: bold;">Min 10</td>
+                        <td style="padding:10px 25px; text-align: center;"><button class="action-btn" onclick="window.location.href='orders.html'" style="background:#111; color:#fff; border:none; padding:10px 25px; font-weight:900; font-size:11px; text-transform:uppercase;">Manage</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div style="padding: 10px; text-align: center; color: #bbb; font-size: 9px; letter-spacing: 5px; font-weight: 800; flex-shrink: 0;">
+            TERMINAL FEED v2.4 // DATA_SECURE
+        </div>
+    </div>
+
+</body>
+</html>
