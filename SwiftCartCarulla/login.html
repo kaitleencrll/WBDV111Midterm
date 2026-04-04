@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In</title>
+    <style>
+        :root {
+            --deep-purple: #2d1b4e;
+            --amethyst: #6c4ab6;
+            --lavender-light: #f3efff;
+            --accent-glow: #bc13fe;
+            --glass-white: rgba(255, 255, 255, 0.85);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            display: flex;
+            height: 100vh;
+            background-color: var(--lavender-light);
+            overflow: hidden;
+        }
+
+        /* BACKGROUND DECORATION */
+        .bg-shape {
+            position: absolute;
+            z-index: -1;
+            filter: blur(80px);
+            border-radius: 50%;
+            animation: drift 20s infinite alternate;
+        }
+        .shape-1 { width: 400px; height: 400px; background: #dcd0ff; top: -100px; left: -100px; }
+        .shape-2 { width: 500px; height: 500px; background: #e0b0ff; bottom: -150px; right: -150px; animation-delay: -5s; }
+
+        @keyframes drift {
+            from { transform: translate(0, 0) scale(1); }
+            to { transform: translate(50px, 50px) scale(1.1); }
+        }
+
+        /* LEFT SIDE (MODERN CAROUSEL) */
+        .hero-container {
+            flex: 1.2;
+            position: relative;
+            background: #000;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        @media (max-width: 900px) { .hero-container { display: none; } }
+
+        #banner {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+            transition: 1s ease-in-out;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(45,27,78,0.9), transparent);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 80px;
+            z-index: 10;
+        }
+
+        #hero-content { transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
+
+        /* RIGHT SIDE (DESIGNER LOGIN) */
+        .form-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            position: relative;
+        }
+
+        .login-card {
+            background: var(--glass-white);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 50px 40px;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 380px;
+            box-shadow: 0 20px 40px rgba(45,27,78,0.1);
+            border: 1px solid rgba(255,255,255,0.5);
+            text-align: center;
+        }
+
+        h2 { color: var(--deep-purple); font-size: 32px; margin-top: 0; margin-bottom: 10px; }
+        .sub-text { color: #7a6e91; margin-bottom: 35px; font-size: 15px; }
+
+        .input-box {
+            width: 100%;
+            padding: 15px 20px;
+            margin-bottom: 18px;
+            border: 1.5px solid #e0d9f0;
+            border-radius: 12px;
+            font-size: 16px;
+            background: rgba(255,255,255,0.7);
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        .input-box:focus {
+            outline: none;
+            border-color: var(--amethyst);
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(108, 74, 182, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--amethyst);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-top: 10px;
+            box-shadow: 0 8px 20px rgba(108, 74, 182, 0.3);
+        }
+
+        .login-btn:hover {
+            background: var(--accent-glow);
+            transform: scale(1.02);
+            box-shadow: 0 12px 25px rgba(188, 19, 254, 0.4);
+        }
+
+        .forgot-link {
+            display: block;
+            margin-top: 20px;
+            color: var(--amethyst);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Animated BG Blobs -->
+    <div class="bg-shape shape-1"></div>
+    <div class="bg-shape shape-2"></div>
+
+    <div class="hero-container">
+        <img id="banner" src="https://img.freepik.com/premium-photo/vibrant-purple-tech-aesthetic-wallpaper-iphone-32-edition_1000124-108316.jpg" alt="Hero">
+        <div class="hero-overlay">
+            <div id="hero-content">
+                <p id="sub" style="color:#dcd0ff; font-weight:600; text-transform:uppercase; letter-spacing:2px; margin-bottom:10px;">SwiftCart Elite</p>
+                <h1 id="title" style="color:white; font-size:64px; margin:0;">Future Tech</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-container">
+        <div class="login-card">
+            <h2>Welcome</h2>
+            <p class="sub-text">Enter your credentials to access the vault.</p>
+            
+            <form action="index.html">
+                <input type="email" class="input-box" placeholder="Email Address" required>
+                <input type="password" class="input-box" placeholder="Password" required>
+                
+                <button type="submit" class="login-btn">Secure Login</button>
+                
+                <a href="#" class="forgot-link">Lost your password?</a>
+            </form>
+
+            <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;">
+                <p style="font-size:14px; color:#999;">Don't have an account? <a href="#" style="color:var(--amethyst); font-weight:600; text-decoration:none;">Create one</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const slides = [
+            { img: "https://miro.medium.com/v2/resize:fit:1400/1*dbUcLhu5PK2pHVAfTjLojg.jpeg", title: "Future Tech", sub: "SwiftCart Elite" },
+            { img: "https://img.freepik.com/free-photo/digital-art-inmersive-exhibition_23-2151428433.jpg", title: "New Era", sub: "Digital Lifestyle" },
+            { img: "https://4kwallpapers.com/images/walls/thumbs_2t/17116.jpg", title: "Premium", sub: "Quality Guaranteed" }
+        ];
+
+        let i = 0;
+        const banner = document.getElementById("banner");
+        const title = document.getElementById("title");
+        const sub = document.getElementById("sub");
+        const content = document.getElementById("hero-content");
+
+        setInterval(() => {
+            i = (i + 1) % slides.length;
+            
+            content.style.opacity = "0";
+            content.style.transform = "translateY(20px)";
+            banner.style.opacity = "0.3";
+
+            setTimeout(() => {
+                banner.src = slides[i].img;
+                title.innerText = slides[i].title;
+                sub.innerText = slides[i].sub;
+                
+                banner.style.opacity = "0.8";
+                content.style.opacity = "1";
+                content.style.transform = "translateY(0)";
+            }, 300);
+        }, 3000);
+    </script>
+</body>
+</html>

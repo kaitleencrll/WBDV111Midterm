@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catalog</title>
+    <style>
+        :root {
+            --primary: #2d1b4e; 
+            --accent: #9d72ff; 
+            --neon: #bc13fe;
+            --nav-bg: #0f081a;
+            --white: #ffffff;
+            --main-bg: #e9e2ff; 
+            --card-white: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--main-bg);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: var(--nav-bg);
+            display: flex;
+            flex-direction: column;
+            z-index: 10;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.3);
+        }
+
+        .logo-box {
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            color: var(--white);
+            text-transform: uppercase;
+        }
+
+        .logo-text span {
+            background: var(--accent);
+            color: var(--white);
+            padding: 0px 8px;
+            border-radius: 4px;
+            margin-left: 4px;
+        }
+
+        .sidebar nav {
+            display: flex;
+            flex-direction: column;
+            padding: 0 10px;
+        }
+
+        .sidebar nav a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            padding: 18px 25px;
+            border-radius: 0 50px 50px 0;
+            transition: 0.4s ease;
+            font-size: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 2px;
+        }
+
+        .sidebar nav a:hover {
+            background: rgba(157, 114, 255, 0.1);
+            color: var(--accent);
+            padding-left: 35px;
+        }
+
+        .sidebar nav a.active {
+            background: linear-gradient(90deg, var(--accent), transparent);
+            color: var(--white);
+            border-left: 4px solid var(--neon);
+        }
+
+        .ad-container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            position: relative;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+
+        .nav-portrait {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-top: 3px solid var(--neon);
+            filter: brightness(0.6);
+        }
+
+        .ad-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 40px 20px;
+            background: linear-gradient(transparent, rgba(15, 8, 26, 0.95));
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .ad-overlay h4 {
+            color: var(--white);
+            margin: 0;
+            font-size: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px var(--neon);
+        }
+
+        .ad-overlay p {
+            color: var(--accent);
+            font-size: 13px;
+            margin: 8px 0 0;
+            font-weight: bold;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .hero {
+            width: 100%;
+            height: 500px;
+            position: relative;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to right, rgba(15, 8, 26, 0.9), transparent);
+            display: flex;
+            align-items: center;
+            padding-left: 60px;
+            z-index: 2;
+        }
+
+        .hero-text {
+            color: white;
+            transition: all 0.6s ease;
+        }
+
+        .hero-text h1 {
+            font-size: 55px;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        .hero-text p {
+            font-size: 22px;
+            color: var(--accent);
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        #banner {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.8s ease-in-out;
+        }
+
+        .catalog-container {
+            padding: 60px 40px;
+            display: flex;
+            justify-content: center;
+            background: var(--main-bg);
+        }
+
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 35px;
+            width: 100%;
+            max-width: 1300px;
+        }
+
+        .product-card {
+            background: var(--card-white);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: 0.4s ease;
+            text-align: center;
+            border: 1px solid rgba(157, 114, 255, 0.2);
+            box-shadow: 0 10px 20px rgba(45, 27, 78, 0.1);
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(45, 27, 78, 0.2);
+            border-color: var(--neon);
+        }
+
+        .img-box {
+            width: 100%;
+            height: 240px;
+            background: #fff;
+        }
+
+        .img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .info {
+            padding: 25px;
+        }
+
+        .info h3 {
+            margin: 0;
+            font-size: 17px;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .price {
+            display: block;
+            font-size: 22px;
+            margin: 12px 0;
+            font-weight: 800;
+            color: var(--accent);
+        }
+
+        .add-btn {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+            transition: 0.3s;
+        }
+
+        .add-btn:hover {
+            background: var(--neon);
+            box-shadow: 0 5px 15px rgba(188, 19, 254, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="logo-box">
+            <div class="logo-text">SWIFT<span>CART</span></div>
+        </div>
+        <nav>
+            <a href="index.html" class="active">📦 Catalog</a>
+            <a href="cart.html">🛒 My Cart</a>
+            <a href="checkout.html">💳 Checkout</a>
+            <a href="login.html">👤 Account</a>
+        </nav>
+        
+        <div class="ad-container">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQsGP3ksIAyFqp8sW4zjng78T5A1qcM2CylQ&s" class="nav-portrait" alt="Magazine Ad">
+            <div class="ad-overlay">
+                <h4>Summer Sale</h4>
+                <p>Up to 50% OFF</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="hero">
+            <div class="hero-overlay">
+                <div id="hero-content" class="hero-text">
+                    <h1 id="hero-title">Future Tech</h1>
+                    <p id="hero-subtitle">Exclusive SwiftCart Collection</p>
+                </div>
+            </div>
+            <img id="banner" src="https://miro.medium.com/v2/resize:fit:1400/1*dbUcLhu5PK2pHVAfTjLojg.jpeg" alt="Banner">
+        </div>
+
+        <div class="catalog-container">
+            <div class="catalog-grid">
+                <div class="product-card">
+                    <div class="img-box"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQz9z1nu4zghiY7PM7Gu4mz55k-UI5WNPAghQ&s" alt="Watch"></div>
+                    <div class="info">
+                        <h3>Elite Wristwatch</h3>
+                        <span class="price">₱12,500</span>
+                        <button class="add-btn" onclick="addToCart('Watch', 12500)">ADD TO CART</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="img-box"><img src="https://www.shutterstock.com/image-photo/headphones-microphone-metalic-blue-violet-260nw-2585699913.jpg" alt="Headset"></div>
+                    <div class="info">
+                        <h3>Studio Headset</h3>
+                        <span class="price">₱8,200</span>
+                        <button class="add-btn" onclick="addToCart('Headset', 8200)">ADD TO CART</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="img-box"><img src="https://www.dell.com/wp-uploads/2024/01/XPS-9640-laptops-back-to-back-1280x800-1-640x400.jpg" alt="Laptop"></div>
+                    <div class="info">
+                        <h3>XPS Swift Laptop</h3>
+                        <span class="price">₱65,000</span>
+                        <button class="add-btn" onclick="addToCart('Laptop', 65000)">ADD TO CART</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="img-box"><img src="https://t4.ftcdn.net/jpg/05/36/92/41/360_F_536924102_TV4FGmLDAVB1jkOqcw88B7dgX6aRqt7X.jpg" alt="Phone"></div>
+                    <div class="info">
+                        <h3>SwiftPhone Z</h3>
+                        <span class="price">₱42,999</span>
+                        <button class="add-btn" onclick="addToCart('Phone', 42999)">ADD TO CART</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const slides = [
+            {
+                img: "https://miro.medium.com/v2/resize:fit:1400/1*dbUcLhu5PK2pHVAfTjLojg.jpeg",
+                title: "Future Tech",
+                sub: "Exclusive SwiftCart Collection"
+            },
+            {
+                img: "https://img.freepik.com/free-photo/digital-art-inmersive-exhibition_23-2151428433.jpg?semt=ais_incoming&w=740&q=80",
+                title: "New Era",
+                sub: "Next Generation Electronics"
+            },
+            {
+                img: "https://4kwallpapers.com/images/walls/thumbs_2t/17116.jpg",
+                title: "Top Tier",
+                sub: "Premium Quality Guaranteed"
+            }
+        ];
+        
+        let i = 0;
+        const b = document.getElementById("banner");
+        const hTitle = document.getElementById("hero-title");
+        const hSub = document.getElementById("hero-subtitle");
+        const hBox = document.getElementById("hero-content");
+
+        setInterval(() => {
+            i = (i + 1) % slides.length;
+            b.style.opacity = "0.2";
+            hBox.style.opacity = "0";
+            hBox.style.transform = "translateY(10px)";
+            setTimeout(() => {
+                b.src = slides[i].img;
+                hTitle.innerText = slides[i].title;
+                hSub.innerText = slides[i].sub;
+                b.style.opacity = "1";
+                hBox.style.opacity = "1";
+                hBox.style.transform = "translateY(0)";
+            }, 300);
+        }, 3000);
+
+        function addToCart(n, p) {
+            let c = JSON.parse(localStorage.getItem("cart")) || [];
+            c.push({ name: n, price: p });
+            localStorage.setItem("cart", JSON.stringify(c));
+            alert(n + " added to cart");
+        }
+    </script>
+</body>
+</html>

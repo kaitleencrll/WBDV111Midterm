@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <style>
+        :root {
+            --primary: #2d1b4e; 
+            --accent: #9d72ff; 
+            --neon: #bc13fe;
+            --nav-bg: #0f081a;
+            --main-bg: #e9e2ff; 
+            --white: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--main-bg);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* --- SIDEBAR FIX (MATCHING CATALOG) --- */
+        .sidebar {
+            width: 280px;
+            background: var(--nav-bg);
+            display: flex;
+            flex-direction: column;
+            z-index: 10;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.3);
+        }
+
+        .logo-box {
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            color: var(--white);
+            text-transform: uppercase;
+        }
+
+        .logo-text span {
+            background: var(--accent);
+            color: var(--white);
+            padding: 0px 8px;
+            border-radius: 4px;
+            margin-left: 4px;
+        }
+
+        .sidebar nav {
+            display: flex;
+            flex-direction: column;
+            padding: 0 10px;
+        }
+
+        .sidebar nav a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            padding: 18px 25px;
+            border-radius: 0 50px 50px 0;
+            transition: 0.4s ease;
+            font-size: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 2px;
+        }
+
+        .sidebar nav a:hover {
+            background: rgba(157, 114, 255, 0.1);
+            color: var(--accent);
+            padding-left: 35px;
+        }
+
+        .sidebar nav a.active {
+            background: linear-gradient(90deg, var(--accent), transparent);
+            color: var(--white);
+            border-left: 4px solid var(--neon);
+        }
+
+        .ad-container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            position: relative;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+
+        .nav-portrait {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-top: 3px solid var(--neon);
+            filter: brightness(0.6);
+        }
+
+        .ad-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 40px 20px;
+            background: linear-gradient(transparent, rgba(15, 8, 26, 0.95));
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .ad-overlay h4 {
+            color: var(--white);
+            margin: 0;
+            font-size: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px var(--neon);
+        }
+
+        .ad-overlay p {
+            color: var(--accent);
+            font-size: 13px;
+            margin: 8px 0 0;
+            font-weight: bold;
+        }
+
+        /* --- CONTENT AREA --- */
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+
+        .receipt-card {
+            background: var(--white);
+            width: 100%;
+            max-width: 500px;
+            padding: 50px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(45, 27, 78, 0.15);
+            text-align: center;
+            position: relative;
+        }
+
+        .success-icon {
+            font-size: 60px;
+            color: #10b981;
+            margin-bottom: 20px;
+        }
+
+        h2 { color: var(--primary); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+        .status-tag { background: #d1fae5; color: #065f46; padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 12px; }
+
+        .order-details {
+            text-align: left;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f8ff;
+            border-radius: 15px;
+            border: 1px dashed var(--accent);
+        }
+
+        .order-details p { margin: 10px 0; color: #555; font-size: 14px; }
+        .order-details strong { color: var(--primary); }
+
+        .total-paid {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--accent);
+            margin: 20px 0;
+        }
+
+        .finish-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            border-radius: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+
+        .finish-btn:hover {
+            background: var(--neon);
+            box-shadow: 0 10px 20px rgba(188, 19, 254, 0.3);
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="logo-box">
+            <div class="logo-text">SWIFT<span>CART</span></div>
+        </div>
+        <nav>
+            <a href="index.html">📦 Catalog</a>
+            <a href="cart.html">🛒 My Cart</a>
+            <a href="checkout.html" class="active">💳 Checkout</a>
+            <a href="login.html">👤 Account</a>
+        </nav>
+        
+        <div class="ad-container">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQsGP3ksIAyFqp8sW4zjng78T5A1qcM2CylQ&s" class="nav-portrait" alt="Magazine Ad">
+            <div class="ad-overlay">
+                <h4>Order Secured</h4>
+                <p>Payment Received</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="receipt-card">
+            <div class="success-icon">✔</div>
+            <h2>Payment Successful</h2>
+            <span class="status-tag">STATUS: ORDER CONFIRMED</span>
+
+            <div class="order-details">
+                <p><strong>Order ID:</strong> <span id="orderId"></span></p>
+                <p><strong>Items:</strong> <span id="itemList"></span></p>
+                <p><strong>Shipment:</strong> Standard Door-to-Door</p>
+            </div>
+
+            <div class="total-paid" id="totalDisplay">₱0</div>
+
+            <button class="finish-btn" onclick="finishOrder()">Finish & Return Home</button>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            let total = localStorage.getItem("totalPrice") || 0;
+            let names = cart.map(i => i.name).join(", ");
+            
+            document.getElementById("orderId").innerText = "SWFT-" + Math.floor(Math.random() * 1000000);
+            document.getElementById("itemList").innerText = names || "No items recorded";
+            document.getElementById("totalDisplay").innerText = "₱" + parseInt(total).toLocaleString();
+        };
+
+        function finishOrder() {
+            localStorage.removeItem("cart");
+            localStorage.removeItem("totalPrice");
+            window.location = "index.html";
+        }
+    </script>
+</body>
+</html>
