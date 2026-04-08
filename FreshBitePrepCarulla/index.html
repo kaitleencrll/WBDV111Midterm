@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meals</title>
+<link href="https://googleapis.com" rel="stylesheet">
+<style>
+    body { margin: 0; font-family: 'Poppins', sans-serif; background: #ffffff; color: #2d5a27; overflow-x: hidden; }
+    
+    .top-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 60px;
+        background: #ffffff;
+        border-bottom: 3px solid #f1c40f;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .logo-box { text-align: center; cursor: pointer; text-decoration: none; }
+    .logo-main { 
+        font-family: 'Leckerli One', cursive; 
+        font-size: 32px; 
+        color: #2d5a27; 
+        margin: 0;
+        line-height: 1;
+    }
+    .logo-sub { 
+        font-size: 9px; 
+        letter-spacing: 4px; 
+        text-transform: uppercase; 
+        color: #f1c40f; 
+        font-weight: 800;
+        display: block;
+    }
+
+    .nav-links button {
+        background: none;
+        border: none;
+        margin-left: 35px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        color: #2d5a27;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    .nav-links button:hover { color: #f1c40f; }
+
+    .gallery {
+        padding: 40px 60px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        background: #fff;
+    }
+
+    .card {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid #eee;
+        transition: 0.3s;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+    }
+    .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(45,90,39,0.12); }
+    .card img { width: 100%; height: 160px; object-fit: cover; }
+    
+    .badge {
+        display: inline-block;
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+    }
+    .keto { background: #e8f5e9; color: #2d5a27; }
+    .vegan { background: #fffde7; color: #f1c40f; }
+    .paleo { background: #f1f8e9; color: #558b2f; }
+    .balanced { background: #f1c40f; color: white; }
+
+    .price-label {
+        font-weight: 600;
+        color: #f1c40f;
+        float: right;
+    }
+
+    .btn-nutri {
+        width: 100%;
+        padding: 10px;
+        background: #2d5a27;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        margin-top: 10px;
+    }
+
+    #loginDrawer, #nutriModal {
+        position: fixed;
+        top: 0;
+        right: -400px;
+        width: 320px;
+        height: 100%;
+        background: white;
+        box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+        transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        padding: 40px;
+        z-index: 1000;
+    }
+    .drawer-open { right: 0 !important; }
+    
+    input {
+        width: 100%;
+        padding: 12px;
+        margin: 10px 0 20px 0;
+        border: 2px solid #f1f8e9;
+        border-radius: 8px;
+        box-sizing: border-box;
+    }
+
+    .nutri-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 12px 0;
+        border-bottom: 1px solid #f1f8e9;
+    }
+    .nutri-val { font-weight: 600; color: #2d5a27; }
+
+    @media (max-width: 1100px) { .gallery { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .gallery { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+    <a href="index.html" class="logo-box">
+        <h1 class="logo-main">FreshBite</h1>
+        <span class="logo-sub">Prep & Co.</span>
+    </a>
+    <div class="nav-links">
+        <button onclick="location.href='index.html'">Meals</button>
+        <button onclick="location.href='plans.html'">Plans</button>
+        <button onclick="location.href='billing.html'">Billing</button>
+        <button onclick="toggleLogin()" style="background:#2d5a27; color:white; padding:8px 20px; border-radius:20px;">Account</button>
+    </div>
+</nav>
+
+<main class="gallery">
+    <div class="card">
+        <img src="https://www.unileverfoodsolutions.com.ph/dam/global-ufs/mcos/SEA/calcmenu/recipes/PH-recipes/appetisers/sizzling-pork-sisig-manila/sizzling-pork-sisig-manila-main.jpg">
+        <div style="padding:15px;">
+            <span class="badge keto">Keto</span>
+            <span class="price-label">₱250</span>
+            <h3 style="margin:5px 0; font-size:16px;">Pork Sisig</h3>
+            <p style="font-size:11px; color:#777;">Classic Pampanga style with cauliflower rice.</p>
+            <button onclick="openNutri('Pork Sisig', '480', '32g', '8g', '35g')" class="btn-nutri">Nutrients</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="https://thumbs.dreamstime.com/b/vibrant-bowl-chicken-adobo-showcases-tender-meat-coated-savory-sauce-accompanied-garlic-herbs-set-rustic-342817827.jpg">
+        <div style="padding:15px;">
+            <span class="badge keto">Keto</span>
+            <span class="price-label">₱220</span>
+            <h3 style="margin:5px 0; font-size:16px;">Chicken Adobo</h3>
+            <p style="font-size:11px; color:#777;">Slow-cooked vinegar-soy braise with high protein.</p>
+            <button onclick="openNutri('Chicken Adobo', '420', '38g', '5g', '28g')" class="btn-nutri">Nutrients</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="https://assets.unileversolutions.com/v1/103340101.png">
+        <div style="padding:15px;">
+            <span class="badge vegan">Vegan</span>
+            <span class="price-label">₱190</span>
+            <h3 style="margin:5px 0; font-size:16px;">Bicol Express</h3>
+            <p style="font-size:11px; color:#777;">Mushroom-based creamy coconut milk stew.</p>
+            <button onclick="openNutri('Bicol Express', '350', '12g', '22g', '24g')" class="btn-nutri">Nutrients</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="https://s.lightorangebean.com/media/20250825081106/simple-tofu-mushroom-adobo_done.jpg">
+        <div style="padding:15px;">
+            <span class="badge vegan">Vegan</span>
+            <span class="price-label">₱180</span>
+            <h3 style="margin:5px 0; font-size:16px;">Tofu Adobo</h3>
+            <p style="font-size:11px; color:#777;">Savory meatless stew with organic tofu chunks.</p>
+            <button onclick="openNutri('Tofu Adobo', '310', '18g', '28g', '14g')" class="btn-nutri">Nutrients</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="https://p1media.prosperna.ph/media/64f9868d33f7cf046c73de1b/1761121844426-Cover%20Photo%20%28Desktop%20-%20Wide%29.webp">
+        <div style="padding:15px;">
+            <span class="badge paleo">Paleo</span>
+            <span class="price-label">₱280</span>
+            <h3 style="margin:5px 0; font-size:16px;">Grilled Bangus</h3>
+            <p style="font-size:11px; color:#777;">Boneless milkfish belly with fresh tomato salsa.</p>
+            <button onclick="openNutri('Grilled Bangus', '380', '28g', '0g', '22g')" class="btn-nutri">Nutrients</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="https://assets.unileversolutions.com/v1/85776461.jpg">
+        <div style="padding:15px;">
+            <span class="badge paleo">Paleo</span>
+            <span class="price-label">₱320</span>
+            <h3 style="margin:5px 0; font-size:16px;">Beef Caldereta</h3>
+            <p style="font-size:11px; color:#777;">Tender beef chunks in liver-based tomato sauce.</p>
+            <button onclick="openNutri('Beef Caldereta', '450', '35g', '12g', '28g')" class="btn-nutri">Nutrients</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="https://www.shutterstock.com/image-photo/applying-marinade-juicy-barbecued-chicken-600nw-1853766079.jpg">
+        <div style="padding:15px;">
+            <span class="badge balanced">Balanced</span>
+            <span class="price-label">₱240</span>
+            <h3 style="margin:5px 0; font-size:16px;">Chicken Inasal</h3>
+            <p style="font-size:11px; color:#777;">Annatto-marinated grilled chicken with brown rice.</p>
+            <button onclick="openNutri('Chicken Inasal', '510', '42g', '45g', '12g')" class="btn-nutri">Nutrients</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="https://www.bitesized.ph/wp-content/uploads/2018/08/Tabasco-Spicy-Sinigang-Hot-Pot-Noodles_WEB.jpg">
+        <div style="padding:15px;">
+            <span class="badge balanced">Balanced</span>
+            <span class="price-label">₱290</span>
+            <h3 style="margin:5px 0; font-size:16px;">Sinigang Pasta</h3>
+            <p style="font-size:11px; color:#777;">Innovative tamarind pasta with fresh shrimp.</p>
+            <button onclick="openNutri('Sinigang Pasta', '440', '24g', '52g', '10g')" class="btn-nutri">Nutrients</button>
+        </div>
+    </div>
+</main>
+
+<div id="nutriModal">
+    <h2 id="mName" style="color:#2d5a27; margin-bottom:5px;">Meal Name</h2>
+    <p style="font-size:12px; color:#888; margin-bottom:30px;">Per Serving Analysis</p>
+    
+    <div class="nutri-row"><span>Calories</span><span class="nutri-val" id="mCal">0</span></div>
+    <div class="nutri-row"><span>Protein</span><span class="nutri-val" id="mPro">0</span></div>
+    <div class="nutri-row"><span>Carbohydrates</span><span class="nutri-val" id="mCar">0</span></div>
+    <div class="nutri-row"><span>Healthy Fats</span><span class="nutri-val" id="mFat">0</span></div>
+    
+    <div style="margin-top:40px; padding:20px; background:#f1f8e9; border-radius:10px; font-size:12px;">
+        <strong>FreshBite Guarantee:</strong> No MSG or artificial preservatives used.
+    </div>
+    
+    <button onclick="closeNutri()" style="width:100%; margin-top:30px; padding:12px; background:#f1c40f; color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">Back to Gallery</button>
+</div>
+
+<div id="loginDrawer">
+    <h2 style="margin-top:0;">Member Login</h2>
+    <input type="text" placeholder="juan.delacruz@email.com">
+    <input type="password" placeholder="••••••••">
+    <button onclick="location.href='index.html'" style="width:100%; padding:15px; background:#2d5a27; color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">Login</button>
+    <button onclick="toggleLogin()" style="width:100%; background:none; border:none; margin-top:20px; color:#aaa; cursor:pointer;">Close</button>
+</div>
+
+<script>
+function toggleLogin(){
+    document.getElementById('loginDrawer').classList.toggle('drawer-open');
+}
+
+function openNutri(name, cal, pro, car, fat) {
+    document.getElementById('mName').innerText = name;
+    document.getElementById('mCal').innerText = cal;
+    document.getElementById('mPro').innerText = pro;
+    document.getElementById('mCar').innerText = car;
+    document.getElementById('mFat').innerText = fat;
+    document.getElementById('nutriModal').classList.add('drawer-open');
+}
+
+function closeNutri() {
+    document.getElementById('nutriModal').classList.remove('drawer-open');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Billing</title>
+<link href="https://googleapis.com" rel="stylesheet">
+<style>
+    body { margin: 0; font-family: 'Poppins', sans-serif; background: #ffffff; color: #2d5a27; overflow-x: hidden; }
+    .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 60px; background: #ffffff; border-bottom: 3px solid #f1c40f; position: sticky; top: 0; z-index: 100; }
+    .logo-box { text-align: center; cursor: pointer; text-decoration: none; }
+    .logo-main { font-family: 'Leckerli One', cursive; font-size: 32px; color: #2d5a27; margin: 0; line-height: 1; }
+    .logo-sub { font-size: 9px; letter-spacing: 4px; text-transform: uppercase; color: #f1c40f; font-weight: 800; display: block; }
+    .nav-links button { background: none; border: none; margin-left: 35px; font-family: 'Poppins', sans-serif; font-weight: 600; color: #2d5a27; cursor: pointer; }
+    
+    .billing-container { max-width: 600px; margin: 60px auto; padding: 40px; background: #fff; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border: 1px solid #f1f8e9; }
+    .summary-title { color: #2d5a27; font-size: 24px; margin-bottom: 30px; text-align: center; font-weight: 600; }
+    .line-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f1f8e9; font-size: 14px; }
+    .total-row { display: flex; justify-content: space-between; padding: 25px 0; margin-top: 10px; font-size: 20px; font-weight: 600; color: #2d5a27; }
+    
+    .btn-pay { width: 100%; padding: 20px; background: #2d5a27; color: white; border: none; border-radius: 12px; font-size: 18px; font-weight: 600; cursor: pointer; transition: 0.3s; margin-top: 20px; }
+    .btn-pay:hover { background: #f1c40f; }
+    .btn-back { display: block; width: 100%; text-align: center; margin-top: 20px; color: #888; text-decoration: none; font-size: 14px; }
+
+    #loginDrawer { position: fixed; top: 0; right: -400px; width: 320px; height: 100%; background: white; box-shadow: -10px 0 30px rgba(0,0,0,0.1); transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); padding: 40px; z-index: 1000; }
+    .drawer-open { right: 0 !important; }
+    input { width: 100%; padding: 12px; margin: 10px 0 20px 0; border: 2px solid #f1f8e9; border-radius: 8px; box-sizing: border-box; }
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+    <a href="index.html" class="logo-box">
+        <h1 class="logo-main">FreshBite</h1>
+        <span class="logo-sub">Prep & Co.</span>
+    </a>
+    <div class="nav-links">
+        <button onclick="location.href='index.html'">Meals</button>
+        <button onclick="location.href='plans.html'">Plans</button>
+        <button onclick="location.href='billing.html'">Billing</button>
+        <button onclick="toggleLogin()" style="background:#2d5a27; color:white; padding:8px 20px; border-radius:20px;">Account</button>
+    </div>
+</nav>
+
+<div class="billing-container">
+    <div class="summary-title">Final Receipt</div>
+    <div id="itemList"></div>
+    <div class="line-item"><span>Delivery Fee</span><span>₱50.00</span></div>
+    <div class="total-row"><span>Total Amount</span><span id="finalTotal">₱0.00</span></div>
+    <button class="btn-pay" onclick="completePayment()">Pay Now (GCash / Card)</button>
+    <a href="index.html" class="btn-back">← Cancel and return home</a>
+</div>
+
+<div id="loginDrawer">
+    <h2 style="margin-top:0;">Member Login</h2>
+    <input type="text" placeholder="juan.delacruz@email.com">
+    <input type="password" placeholder="••••••••">
+    <button onclick="location.href='index.html'" style="width:100%; padding:15px; background:#2d5a27; color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">Login</button>
+    <button onclick="toggleLogin()" style="width:100%; background:none; border:none; margin-top:20px; color:#aaa; cursor:pointer;">Close</button>
+</div>
+
+<script>
+    window.onload = function() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let subtotal = 0;
+        const listDiv = document.getElementById('itemList');
+        cart.forEach(item => {
+            subtotal += item.price;
+            listDiv.innerHTML += `<div class="line-item"><span>${item.name}</span><span>₱${item.price}.00</span></div>`;
+        });
+        document.getElementById('finalTotal').innerText = `₱${subtotal > 0 ? subtotal + 50 : 0}.00`;
+    };
+    function toggleLogin(){ document.getElementById('loginDrawer').classList.toggle('drawer-open'); }
+    function completePayment() {
+        alert('Thank you for your order! Your FreshBite meals are now being prepared.');
+        localStorage.removeItem('cart');
+        window.location.href = 'index.html';
+    }
+</script>
+</body>
+</html>
