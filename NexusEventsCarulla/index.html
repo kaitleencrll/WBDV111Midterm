@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        :root {
+            --accent-yellow: #ffee00;
+            --soft-purple: #bc13fe;
+            --very-dark-purple: #0a0316;
+            --bg-black: #050505;
+            --card-bg: #121212;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: var(--bg-black);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .bg-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at center, #110429 0%, #050505 100%);
+        }
+
+        .circle-outline {
+            position: absolute;
+            border: 2px solid var(--accent-yellow);
+            border-radius: 50%;
+            opacity: 0.2;
+            animation: scrollRight 5s linear infinite;
+            left: -300px;
+        }
+
+        @keyframes scrollRight {
+            0% { transform: translateX(0); opacity: 0; }
+            10% { opacity: 0.2; }
+            90% { opacity: 0.2; }
+            100% { transform: translateX(calc(100vw + 400px)); opacity: 0; }
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            background: var(--very-dark-purple);
+            border-bottom: 2px solid rgba(188, 19, 254, 0.4);
+            position: absolute;
+            top: 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .logo {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+        }
+
+        .logo span {
+            background: linear-gradient(to right, var(--soft-purple), var(--accent-yellow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-left: 10px;
+        }
+
+        .login-container {
+            display: flex;
+            gap: 60px;
+            z-index: 1;
+            margin-top: 80px;
+        }
+
+        .login-card {
+            background: var(--card-bg);
+            border-radius: 40px;
+            width: 420px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative; /* Required for neon glow position */
+            overflow: hidden;   /* Keeps glow inside card corners */
+            padding: 2px;       /* Spacing for the neon line */
+        }
+
+        .card-inner {
+            background: var(--card-bg);
+            border-radius: 38px;
+            padding: 60px;
+            height: 100%;
+            z-index: 2;
+            position: relative;
+        }
+
+        /* NEON GLOW EFFECT */
+        .neon-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--neon-color), transparent);
+            animation: neonFlow 2s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes neonFlow {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .user-card { box-shadow: 15px 15px 0px var(--soft-purple); --neon-color: var(--soft-purple); }
+        .admin-card { box-shadow: 15px 15px 0px var(--accent-yellow); --neon-color: var(--accent-yellow); }
+
+        .login-card:hover {
+            transform: translateY(-15px) scale(1.02);
+        }
+
+        .user-card h2 { color: var(--soft-purple); font-size: 2.2rem; text-transform: uppercase; margin-bottom: 35px; font-weight: 900;}
+        .admin-card h2 { color: var(--accent-yellow); font-size: 2.2rem; text-transform: uppercase; margin-bottom: 35px; font-weight: 900;}
+
+        input {
+            width: 100%;
+            padding: 22px;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            font-size: 1.1rem;
+            box-sizing: border-box;
+            transition: 0.3s;
+        }
+
+        .user-card input:focus {
+            outline: none;
+            border-color: var(--soft-purple);
+            background: rgba(188, 19, 254, 0.05);
+            box-shadow: 0 0 20px var(--soft-purple);
+        }
+
+        .admin-card input:focus {
+            outline: none;
+            border-color: var(--accent-yellow);
+            background: rgba(255, 238, 0, 0.05);
+            box-shadow: 0 0 20px var(--accent-yellow);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 22px;
+            border: none;
+            border-radius: 15px;
+            background: #fff;
+            color: #000;
+            font-weight: 800;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 15px;
+            font-family: Arial, sans-serif;
+        }
+
+        .btn:hover {
+            background: var(--accent-yellow);
+            transform: scale(1.05);
+            box-shadow: 0 0 30px var(--accent-yellow);
+        }
+
+        .demo-text {
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 15px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="bg-container">
+        <div class="circle-outline" style="width:80px; height:80px; top:10%; animation-delay:0s;"></div>
+        <div class="circle-outline" style="width:150px; height:150px; top:40%; animation-delay:1s;"></div>
+        <div class="circle-outline" style="width:40px; height:40px; top:70%; animation-delay:2s;"></div>
+        <div class="circle-outline" style="width:120px; height:120px; top:25%; animation-delay:0.5s;"></div>
+        <div class="circle-outline" style="width:200px; height:200px; top:55%; animation-delay:1.5s;"></div>
+        <div class="circle-outline" style="width:90px; height:90px; top:65%; animation-delay:2.5s;"></div>
+    </div>
+
+    <nav class="navbar">
+        <div class="logo">NEXUS <span>EVENTS</span></div>
+    </nav>
+
+    <div class="login-container">
+ 
+        <div class="login-card user-card">
+            <div class="neon-line"></div>
+            <div class="card-inner">
+                <h2>User Login</h2>
+                <input type="text" placeholder="Email Address">
+                <input type="password" placeholder="Password">
+                <button class="btn" onclick="window.location.href='events.html'">Sign In</button>
+            </div>
+        </div>
+
+        <div class="login-card admin-card">
+            <div class="neon-line"></div>
+            <div class="card-inner">
+                <h2>Admin Login</h2>
+                <div class="demo-text">DEMO ACCESS: admin / 0720</div>
+                <input id="adminUser" type="text" placeholder="Admin ID">
+                <input id="adminPass" type="password" placeholder="Password">
+                <button class="btn" onclick="adminLogin()">Sign In</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    function adminLogin(){
+        var u=document.getElementById("adminUser").value;
+        var p=document.getElementById("adminPass").value;
+        if(u==="admin" && p==="0720"){
+            window.location.href="adminpanel.html";
+        }else{
+            alert("Invalid Admin Credentials. Try admin / 0720.");
+        }
+    }
+    </script>
+
+</body>
+</html>
