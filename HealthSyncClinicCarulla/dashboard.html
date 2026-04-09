@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        :root {
+            --primary: #1e88e5;
+            --secondary: #1565c0;
+            --dark-blue: #1e3a5f;
+            --muted-white-blue: #f4f8fb; /* Muted, whiter blue for better blending */
+            --light-blue: #e3f2fd;
+            --bg: #ffffff;
+            --text: #1e293b;
+            --glow-color: rgba(30, 136, 229, 0.4);
+        }
+
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 5px var(--glow-color); }
+            50% { box-shadow: 0 0 20px var(--glow-color); }
+            100% { box-shadow: 0 0 5px var(--glow-color); }
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            scroll-behavior: smooth;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #eee;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #64748b;
+            margin-left: 20px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--primary); }
+
+        .hero {
+            position: relative;
+            height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 5%;
+        }
+
+        .hero-banner-container {
+            position: relative;
+            width: 100%;
+            height: 550px;
+            border: 4px solid var(--primary);
+            border-radius: 30px;
+            overflow: hidden;
+            animation: pulse-glow 3s infinite;
+        }
+
+        #carousel { display: flex; width: 300%; height: 100%; transition: 0.8s ease-in-out; }
+        #carousel img { width: 100%; height: 100%; object-fit: cover; filter: opacity(0.35); }
+
+        .hero-content {
+            position: absolute;
+            z-index: 2;
+            text-align: center;
+            max-width: 800px;
+            padding: 20px;
+        }
+
+        .banner-logo {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            color: var(--dark-blue);
+        }
+
+        .about-us-box p {
+            font-size: 1.15rem;
+            color: var(--dark-blue);
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .btn-group { display: flex; gap: 15px; justify-content: center; margin-top: 20px; }
+        .btn { padding: 14px 32px; border-radius: 50px; border: none; cursor: pointer; font-weight: 600; transition: 0.3s; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-secondary { background: white; color: var(--primary); border: 1px solid var(--primary); }
+
+        /* Staff Section - Now Whiter and Muted */
+        #staff { 
+            background-color: var(--muted-white-blue); 
+            padding: 80px 5%;
+            transition: background 0.5s ease;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 20px;
+            overflow: hidden;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid #eef2f6;
+            color: var(--text);
+        }
+
+        .card:hover { 
+            transform: translateY(-10px);
+            border: 4px solid var(--primary);
+            box-shadow: 0 15px 30px rgba(30, 136, 229, 0.2);
+        }
+
+        .doctor-img-container { width: 100%; aspect-ratio: 1/1; overflow: hidden; border-bottom: 3px solid var(--primary); }
+        .doctor-img-container img { width: 100%; height: 100%; object-fit: cover; }
+
+        .card-info { padding: 20px; }
+        .specialty { color: var(--primary); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; margin: 5px 0; }
+        .desc { font-size: 14px; color: #64748b; line-height: 1.4; }
+
+        /* Booking Section */
+        .booking-section { background: var(--light-blue); padding: 80px 5%; border-radius: 60px 60px 0 0; }
+        .booking-container { display: flex; gap: 30px; max-width: 1200px; margin: 0 auto; }
+        .wizard-panel { flex: 2; background: white; padding: 40px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .summary-panel { flex: 1; background: white; padding: 40px; border-radius: 25px; border-left: 8px solid var(--primary); }
+
+        .progress-bar { height: 10px; background: #e0e7ff; border-radius: 10px; margin-bottom: 25px; overflow: hidden; }
+        #progressFill { height: 100%; width: 0%; background: var(--primary); transition: 0.5s; }
+
+        .choice-card {
+            padding: 15px;
+            border: 2px solid #f1f5f9;
+            border-radius: 12px;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .choice-card.active { border-color: var(--primary); background: #eff6ff; }
+        
+        .input-field {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #f1f5f9;
+            border-radius: 12px;
+            font-size: 1rem;
+            margin-top: 10px;
+            font-family: inherit;
+        }
+
+        @media (max-width: 1100px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo-text">HealthSync Clinic</div>
+    <div class="nav-links">
+        <a href="#about">About Us</a>
+        <a href="#staff">Doctors</a>
+        <a href="#book">Book</a>
+        <a href="index.html" style="color:#ff4757">Log Out</a>
+    </div>
+</nav>
+
+<div class="hero" id="about">
+    <div class="hero-banner-container">
+        <div id="carousel">
+            <img src="https://thumbs.dreamstime.com/b/anime-background-scene-hospital-drawing-anime-background-modern-hospital-daylight-digital-illustration-290975775.jpg" alt="1">
+            <img src="https://img.freepik.com/premium-photo/anime-style-office-interior-creative-colorful-workplace-illustration_908344-534.jpg?semt=ais_hybrid&w=740&q=80" alt="2">
+            <img src="https://images.stockcake.com/public/c/8/2/c82171f4-e0d2-460d-90f3-21e72005dcd4/peaceful-hospital-dawn-stockcake.jpg" alt="3">
+        </div>
+    </div>
+    <div class="hero-content">
+        <div class="banner-logo">HealthSync Clinic</div>
+        <div class="about-us-box">
+            <p>We've built a modern sanctuary where digital speed meets human care. No more long forms—just a seamless experience designed to get you back to being your best self. Your health journey shouldn't be a maze.</p>
+        </div>
+        <div class="btn-group">
+            <button class="btn btn-primary" onclick="document.getElementById('book').scrollIntoView()">Book Now</button>
+            <button class="btn btn-secondary" onclick="document.getElementById('staff').scrollIntoView()">Meet Our Staff</button>
+        </div>
+    </div>
+</div>
+
+<section id="staff">
+    <h2 style="text-align:center; margin-bottom:50px; font-size: 2.5rem; color: var(--dark-blue);">Our Medical Superstars</h2>
+    <div class="grid">
+        <div class="card">
+            <div class="doctor-img-container"><img src="https://i.pinimg.com/originals/34/c0/77/34c07796f8df0a43167de7fbb9e5739a.jpg" alt="Dr. Baizhu"></div>
+            <div class="card-info">
+                <h4>Dr. Baizhu</h4>
+                <p class="specialty">Cardiology</p>
+                <p class="desc">A heartbeat master blending high-tech care with secret herbal wisdom.</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="doctor-img-container"><img src="https://i.pinimg.com/736x/92/de/28/92de2877088b2dd95f1911a589577e80.jpg" alt="Dr. Dottore"></div>
+            <div class="card-info">
+                <h4>Dr. Dottore</h4>
+                <p class="specialty">Cardiology</p>
+                <p class="desc">The "Iron Man" of heart health using futuristic diagnostic tools.</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="doctor-img-container"><img src="https://i.pinimg.com/736x/50/80/dc/5080dcab49dcf889d65c13e0816c21a7.jpg" alt="Dr. Veritas Ratio"></div>
+            <div class="card-info">
+                <h4>Dr. Veritas Ratio</h4>
+                <p class="specialty">Dermatology</p>
+                <p class="desc">Expect absolute truth and perfect skin from our precision skin-care genius.</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="doctor-img-container"><img src="https://i.pinimg.com/736x/0d/9d/36/0d9d36dbbb33d7614b880f8e7be4f5cb.jpg" alt="Dr. Shoko Ieiri"></div>
+            <div class="card-info">
+                <h4>Dr. Shoko Ieiri</h4>
+                <p class="specialty">Dermatology</p>
+                <p class="desc">The ultimate skin artist. She’ll have you glowing in no time.</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="doctor-img-container"><img src="https://i.pinimg.com/474x/37/06/42/3706424e5ab98b4a76afdd646b90dbc2.jpg" alt="Dr. Luuk Herssen"></div>
+            <div class="card-info">
+                <h4>Dr. Luuk Herssen</h4>
+                <p class="specialty">Pediatrics</p>
+                <p class="desc">The child whisperer. Turning scary checkups into fun adventures.</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="doctor-img-container"><img src="https://i.pinimg.com/736x/41/52/46/4152460a77249b22ec1f2e180e926945.jpg" alt="Dr. Dan Heng"></div>
+            <div class="card-info">
+                <h4>Dr. Dan Heng</h4>
+                <p class="specialty">Pediatrics</p>
+                <p class="desc">Calm and reliable doctor for long-term child wellness.</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="doctor-img-container"><img src="https://i.pinimg.com/736x/4b/e8/b9/4be8b9842a4bfe0ff89b2a0d6d3a2cae.jpg" alt="Dr. Kafka"></div>
+            <div class="card-info">
+                <h4>Dr. Kafka</h4>
+                <p class="specialty">Orthopedics</p>
+                <p class="desc">A mobility specialist who treats your bones with musical precision.</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="doctor-img-container"><img src="https://i.pinimg.com/236x/26/71/b1/2671b16560a37881b4261654cdcd016e.jpg" alt="Dr. Blade"></div>
+            <div class="card-info">
+                <h4>Dr. Blade</h4>
+                <p class="specialty">Orthopedics</p>
+                <p class="desc">Sharp-eyed expert ensuring you're back on your feet stronger than ever.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="booking-section" id="book">
+    <div class="booking-container">
+        <div class="wizard-panel">
+            <p id="stepLabel" style="color:var(--primary); font-weight:bold;"></p>
+            <div class="progress-bar"><div id="progressFill"></div></div>
+            <h3 id="wizardQuestion"></h3>
+            <div id="wizardScreen"></div>
+            <div style="margin-top:30px; display:flex; justify-content:space-between;">
+                <button id="backButton" class="btn" style="background:#eee">Back</button>
+                <button id="nextButton" class="btn btn-primary">Next Step</button>
+            </div>
+        </div>
+        <div class="summary-panel">
+            <h3 style="color: var(--dark-blue);">Summary</h3>
+            <p>Specialty: <strong id="summarySpecialty">-</strong></p>
+            <p>Doctor: <strong id="summaryDoctor">-</strong></p>
+            <p>Date: <strong id="summaryDate">-</strong></p>
+            <p>Time: <strong id="summaryTime">-</strong></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    let idx = 0;
+    setInterval(() => {
+        idx = (idx + 1) % 3;
+        const carousel = document.getElementById("carousel");
+        if(carousel) carousel.style.transform = `translateX(-${idx * 33.333}%)`;
+    }, 2000);
+
+    let currentStep = 0;
+    let selections = { specialty: '', doctor: '', date: '', time: '' };
+    const doctorData = {
+        "Cardiology": ["Dr. Baizhu", "Dr. Dottore"],
+        "Dermatology": ["Dr. Veritas Ratio", "Dr. Shoko Ieiri"],
+        "Pediatrics": ["Dr. Luuk Herssen", "Dr. Dan Heng"],
+        "Orthopedics": ["Dr. Kafka", "Dr. Blade"]
+    };
+
+    function renderStep() {
+        const screen = document.getElementById('wizardScreen');
+        screen.innerHTML = '';
+        document.getElementById('stepLabel').innerText = `Step ${currentStep + 1} of 4`;
+        document.getElementById('progressFill').style.width = `${((currentStep + 1) / 4) * 100}%`;
+        document.getElementById('nextButton').innerText = currentStep === 3 ? "Complete Booking" : "Next Step";
+
+        if (currentStep === 0) {
+            document.getElementById('wizardQuestion').innerText = "Select a Specialty";
+            Object.keys(doctorData).forEach(s => createChoice(s, 'specialty'));
+        } else if (currentStep === 1) {
+            document.getElementById('wizardQuestion').innerText = "Choose your " + selections.specialty + " Expert";
+            doctorData[selections.specialty].forEach(doc => createChoice(doc, 'doctor'));
+        } else if (currentStep === 2) {
+            document.getElementById('wizardQuestion').innerText = "Pick a Date";
+            const input = document.createElement('input');
+            input.type = 'date';
+            input.className = 'input-field';
+            input.min = new Date().toISOString().split("T")[0];
+            input.value = selections.date;
+            input.onchange = (e) => { selections.date = e.target.value; updateSummary(); };
+            screen.appendChild(input);
+        } else if (currentStep === 3) {
+            document.getElementById('wizardQuestion').innerText = "Choose a Time";
+            const input = document.createElement('input');
+            input.type = 'time';
+            input.className = 'input-field';
+            input.value = selections.time;
+            input.onchange = (e) => { selections.time = e.target.value; updateSummary(); };
+            screen.appendChild(input);
+        }
+    }
+
+    function createChoice(text, key) {
+        const div = document.createElement('div');
+        div.className = 'choice-card' + (selections[key] === text ? ' active' : '');
+        div.innerText = text;
+        div.onclick = () => {
+            selections[key] = text;
+            if(key === 'specialty') selections.doctor = ''; 
+            updateSummary();
+            renderStep();
+        };
+        document.getElementById('wizardScreen').appendChild(div);
+    }
+
+    function updateSummary() {
+        document.getElementById('summarySpecialty').innerText = selections.specialty || '-';
+        document.getElementById('summaryDoctor').innerText = selections.doctor || '-';
+        document.getElementById('summaryDate').innerText = selections.date || '-';
+        document.getElementById('summaryTime').innerText = selections.time || '-';
+    }
+
+    document.getElementById('nextButton').onclick = () => {
+        if (currentStep === 0 && !selections.specialty) return alert("Select a specialty");
+        if (currentStep === 1 && !selections.doctor) return alert("Select a doctor");
+        if (currentStep === 2 && !selections.date) return alert("Pick a date");
+        
+        if (currentStep < 3) { 
+            currentStep++; 
+            renderStep(); 
+        } else {
+            if (!selections.time) return alert("Select a time");
+            alert("Booking Successful!");
+            selections = { specialty: '', doctor: '', date: '', time: '' };
+            currentStep = 0;
+            updateSummary();
+            renderStep();
+        }
+    };
+
+    document.getElementById('backButton').onclick = () => {
+        if (currentStep > 0) { currentStep--; renderStep(); }
+    };
+
+    renderStep();
+</script>
+</body>
+</html>

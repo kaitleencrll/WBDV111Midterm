@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        :root {
+            --primary: #1e88e5;
+            --secondary: #1565c0;
+            --dark-blue: #1e3a5f;
+            --light-blue-bg: #e3f2fd;
+            --admin-dark-bg: #1e3a5f;
+            --page-bg: #f0f4f8;
+            --glow-color: rgba(30, 136, 229, 0.5);
+            --error-glow: rgba(255, 71, 87, 0.7);
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Inter', sans-serif;
+            background: var(--page-bg);
+            overflow: hidden;
+        }
+
+        /* Banner Logic */
+        .hero-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            transition: all 0.9s cubic-bezier(0.7, 0, 0.3, 1);
+            z-index: 100;
+            background: white;
+        }
+
+        .hero-banner.shrink {
+            height: 200px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border-bottom: 4px solid var(--primary);
+        }
+
+        .banner-logo-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            color: var(--dark-blue);
+            transition: 0.8s;
+            z-index: 10;
+            text-align: center;
+            width: 100%;
+            pointer-events: none;
+        }
+
+        .shrink .banner-logo-overlay { font-size: 2.2rem; }
+
+        #carousel { display: flex; width: 300%; height: 100%; transition: 0.8s ease-in-out; }
+        #carousel img { width: 100%; height: 100%; object-fit: cover; filter: brightness(1.1) opacity(0.5); }
+
+        .banner-btn {
+            position: absolute;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 18px 50px;
+            border: none;
+            background: var(--primary);
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.4s;
+            z-index: 15;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .shrink .banner-btn { opacity: 0; visibility: hidden; transform: translate(-50%, 50px); }
+
+        /* Login Cards - Adjusted Size */
+        #loginSection {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            padding: 40px 20px;
+            opacity: 0;
+            transform: translateY(100px);
+            transition: 0.8s 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-top: 240px;
+        }
+
+        #loginSection.reveal { opacity: 1; transform: translateY(0); }
+
+        .login-card {
+            padding: 45px;
+            border-radius: 35px;
+            width: 360px; /* Perfectly Balanced Width */
+            text-align: center;
+            transition: 0.4s;
+            border: 3px solid rgba(30, 136, 229, 0.3);
+            box-shadow: 0 0 20px var(--glow-color);
+        }
+
+        .user-card { background: var(--light-blue-bg); color: var(--dark-blue); }
+        .admin-card { background: var(--admin-dark-bg); color: white; border-color: rgba(255, 255, 255, 0.2); }
+
+        .login-card:hover { transform: translateY(-10px); box-shadow: 0 0 35px var(--glow-color); }
+        .login-card h2 { font-size: 2rem; font-weight: 800; margin-bottom: 15px; }
+
+        .input-group input {
+            width: 100%;
+            padding: 16px;
+            margin-top: 15px;
+            border: 2px solid transparent;
+            border-radius: 15px;
+            box-sizing: border-box;
+            outline: none;
+            transition: 0.3s;
+            font-size: 1rem;
+            opacity: 0; /* For staggered fade */
+            transform: translateY(10px);
+        }
+
+        .reveal .input-group input {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Staggered Animation Timing */
+        .reveal .input-group input:nth-child(1) { transition-delay: 0.6s; }
+        .reveal .input-group input:nth-child(2) { transition-delay: 0.7s; }
+
+        .input-group input:focus { box-shadow: 0 0 15px var(--glow-color); border-color: var(--primary); }
+        .admin-card input { background: rgba(255,255,255,0.1); color: white; }
+        
+        .input-error {
+            border-color: #ff4757 !important;
+            box-shadow: 0 0 15px var(--error-glow) !important;
+            animation: shake 0.4s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .sign-in-btn {
+            width: 100%;
+            margin-top: 30px;
+            padding: 16px;
+            border: none;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .user-btn { background: var(--primary); color: white; }
+        .admin-btn { background: white; color: var(--dark-blue); }
+        .demo-text { font-size: 11px; margin-top: 5px; opacity: 0.7; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="hero-banner" id="heroBanner">
+        <div class="banner-logo-overlay">HealthSync Clinic</div>
+        <div id="carousel">
+            <img src="https://thumbs.dreamstime.com/b/anime-background-scene-hospital-drawing-anime-background-modern-hospital-daylight-digital-illustration-290975775.jpg" alt="1">
+            <img src="https://img.freepik.com/premium-photo/anime-style-office-interior-creative-colorful-workplace-illustration_908344-534.jpg?semt=ais_hybrid&w=740&q=80" alt="2">
+            <img src="https://images.stockcake.com/public/c/8/2/c82171f4-e0d2-460d-90f3-21e72005dcd4/peaceful-hospital-dawn-stockcake.jpg" alt="3">
+        </div>
+        <button class="banner-btn" onclick="startExperience()">GET STARTED</button>
+    </div>
+
+    <div id="loginSection">
+        <div class="login-card user-card">
+            <h2>USER LOGIN</h2>
+            <div class="input-group">
+                <input type="email" placeholder="Email Address">
+                <input type="password" placeholder="Password">
+            </div>
+            <button class="sign-in-btn user-btn" onclick="location.href='dashboard.html'">SIGN IN</button>
+        </div>
+
+        <div class="login-card admin-card" id="adminCard">
+            <h2>ADMIN PORTAL</h2>
+            <p class="demo-text">DEMO ACCESS: admin / 0720</p>
+            <div class="input-group">
+                <input id="adminID" type="text" placeholder="Admin ID">
+                <input id="adminPass" type="password" placeholder="Password">
+            </div>
+            <button class="sign-in-btn admin-btn" onclick="adminLogin()">ENTER PORTAL</button>
+        </div>
+    </div>
+
+    <script>
+        function startExperience() {
+            document.getElementById('heroBanner').classList.add('shrink');
+            document.getElementById('loginSection').classList.add('reveal');
+            document.body.style.overflow = 'auto';
+        }
+
+        let index = 0;
+        setInterval(() => {
+            index = (index + 1) % 3;
+            document.getElementById('carousel').style.transform = `translateX(-${index * 33.333}%)`;
+        }, 2000);
+
+        function adminLogin(){
+            const idField = document.getElementById("adminID");
+            const passField = document.getElementById("adminPass");
+            const id = idField.value;
+            const pass = passField.value;
+
+            if(id === "admin" && pass === "0720"){ 
+                window.location.href = "adminpanel.html"; 
+            } else { 
+                idField.classList.add("input-error");
+                passField.classList.add("input-error");
+                setTimeout(() => {
+                    idField.classList.remove("input-error");
+                    passField.classList.remove("input-error");
+                }, 1000);
+                alert("Incorrect Admin Credentials. Try admin / 0720"); 
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <style>
+        :root {
+            --primary: #1e88e5;
+            --dark-blue: #1e3a5f;
+            --page-bg: #f0f4f8; 
+            --danger: #ff4757;
+            --success: #2ed573;
+            --warning: #ffa502;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--page-bg);
+            color: var(--dark-blue);
+            display: flex;
+            height: 100vh;
+            overflow: hidden; /* Strict no-scroll */
+        }
+
+        /* Sidebar - Slightly wider for presence */
+        .sidebar {
+            width: 280px;
+            background: var(--dark-blue);
+            height: 100vh;
+            color: white;
+            padding: 30px 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+
+        .sidebar-logo {
+            font-size: 22px;
+            font-weight: 900;
+            background: linear-gradient(90deg, #fff, #90caf9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+        }
+
+        .nav-item {
+            padding: 15px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 600;
+            color: rgba(255,255,255,0.7);
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+
+        .nav-item.active, .nav-item:hover { background: rgba(255,255,255,0.1); color: white; }
+
+        /* Main Content Area */
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            min-width: 0;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: white;
+            border-bottom: 1px solid #eef2f6;
+        }
+
+        #liveTime { font-size: 24px; font-weight: 800; color: var(--primary); margin: 0; }
+        #liveDate { font-size: 13px; color: #94a3b8; font-weight: 600; margin: 0; text-align: right;}
+
+        .container {
+            padding: 25px 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            flex-grow: 1;
+            height: calc(100vh - 100px);
+            box-sizing: border-box;
+        }
+
+        /* Scaled Up Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            border: 1px solid #eef2f6;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        }
+
+        .stat-card p { font-size: 12px; color: #94a3b8; font-weight: 800; text-transform: uppercase; margin: 0; letter-spacing: 1px;}
+        .stat-card h2 { font-size: 2.2rem; margin: 10px 0 0; color: var(--dark-blue); }
+
+        /* Main Display Row */
+        .dashboard-row {
+            display: grid;
+            grid-template-columns: 2.2fr 1fr;
+            gap: 30px;
+            flex-grow: 1;
+            min-height: 0; /* Critical for flex child scroll */
+        }
+
+        .panel {
+            background: white;
+            padding: 30px;
+            border-radius: 25px;
+            border: 1px solid #eef2f6;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .table-wrap { overflow-y: auto; flex-grow: 1; margin-top: 15px;}
+
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; font-size: 13px; color: #94a3b8; padding: 15px 10px; border-bottom: 2px solid #f1f5f9; position: sticky; top: 0; background: white; }
+        td { padding: 18px 10px; font-size: 16px; border-bottom: 1px solid #f8fafc; }
+
+        .status-pill { padding: 5px 12px; border-radius: 8px; font-size: 12px; font-weight: 700; }
+        .pill-success { background: #e7f9ed; color: var(--success); }
+        .pill-warning { background: #fff4e5; color: var(--warning); }
+
+        /* Bigger Inventory Footer */
+        .bottom-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .mini-card {
+            background: #f8fbff;
+            padding: 20px;
+            border-radius: 18px;
+            text-align: center;
+            border: 1px solid #eef2f6;
+        }
+
+        .mini-card small { font-size: 12px; font-weight: 700; color: #94a3b8; text-transform: uppercase;}
+        .mini-card div { font-size: 18px; margin-top: 5px;}
+
+        .btn {
+            padding: 12px 25px;
+            border-radius: 12px;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .btn-outline { border: 2px solid var(--primary); color: var(--primary); background: transparent; }
+        .btn-danger { background: var(--danger); color: white; }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <div class="sidebar-logo">HEALTHSYNC CLINIC</div>
+    <div class="nav-item active">Dashboard Overview</div>
+    <div class="nav-item">Schedules & Slots</div>
+    <div class="nav-item">Patient Database</div>
+    <div class="nav-item">Pharmacy Stock</div>
+    <div class="nav-item">Financial Ledger</div>
+    <div style="margin-top: auto; font-size: 13px; color: var(--success); text-align: center; font-weight: bold;">
+        ● SYSTEM ONLINE: PH-MANILA
+    </div>
+</div>
+
+<div class="main-content">
+    <header>
+        <div>
+            <h2 style="margin: 0; font-size: 26px;">Administrator Console</h2>
+            <small style="color: #94a3b8; font-weight: 600;">Operational Hub • Teyvat Medical Network</small>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 30px;">
+            <div style="display: flex; gap: 15px;">
+                <button class="btn btn-outline" onclick="location.href='dashboard.html'">Public View</button>
+                <button class="btn btn-danger" onclick="location.href='index.html'">Log Out</button>
+            </div>
+            <div class="clock-container">
+                <p id="liveTime">00:00:00 AM</p>
+                <p id="liveDate">Loading...</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+       
+        <div class="stats-grid">
+            <div class="stat-card">
+                <p>Monthly Revenue</p>
+                <h2>₱284,500.00</h2>
+            </div>
+            <div class="stat-card">
+                <p>Approval Queue</p>
+                <h2 style="color: var(--danger);">14 Requests</h2>
+            </div>
+            <div class="stat-card">
+                <p>Staff Online</p>
+                <h2>22 Members</h2>
+            </div>
+            <div class="stat-card">
+                <p>Inventory Value</p>
+                <h2>₱115,200.00</h2>
+            </div>
+        </div>
+
+    
+        <div class="dashboard-row">
+            <div class="panel">
+                <h3 style="margin: 0; font-size: 20px; color: var(--primary);">Recent Activity: Teyvat Patients</h3>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Patient Name</th>
+                                <th>Specialist</th>
+                                <th>Branch</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><b>Kamisato Ayaka</b></td><td>Dr. Baizhu</td><td>Central</td><td>₱1,500.00</td><td><span class="status-pill pill-success">Paid</span></td></tr>
+                            <tr><td><b>Raiden Shogun</b></td><td>Dr. Ratio</td><td>Annex</td><td>₱3,200.00</td><td><span class="status-pill pill-warning">Pending</span></td></tr>
+                            <tr><td><b>Arataki Itto</b></td><td>Dr. Blade</td><td>Central</td><td>₱2,000.00</td><td><span class="status-pill pill-success">Paid</span></td></tr>
+                            <tr><td><b>Sangonomiya Kokomi</b></td><td>Dr. Shoko</td><td>Annex</td><td>₱1,200.00</td><td><span class="status-pill pill-success">Paid</span></td></tr>
+                            <tr><td><b>Kaedehara Kazuha</b></td><td>Dr. Dan Heng</td><td>Central</td><td>₱1,500.00</td><td><span class="status-pill pill-warning">Unpaid</span></td></tr>
+                            <tr><td><b>Ganyu</b></td><td>Dr. Dottore</td><td>Annex</td><td>₱2,500.00</td><td><span class="status-pill pill-success">Paid</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h3 style="margin: 0; font-size: 20px; color: var(--primary);">Operational Logs</h3>
+                <div style="font-size: 15px; line-height: 1.8; margin-top: 20px;">
+                    <div style="padding: 15px; background: #fff4e5; border-radius: 15px; border-left: 6px solid var(--warning); margin-bottom: 15px;">
+                        <b>Urgent:</b> Violetgrass and Sweet Flowers arriving at 2:00 PM for pharmacy restock.
+                    </div>
+                    <div style="padding: 15px; background: #e7f9ed; border-radius: 15px; border-left: 6px solid var(--success); margin-bottom: 15px;">
+                        <b>Staff:</b> Dr. Kafka's leave request approved for the upcoming week.
+                    </div>
+                    <div style="padding: 15px; background: #f8fbff; border-radius: 15px; border-left: 6px solid var(--primary);">
+                        <b>System:</b> Weekly cloud backup to PH-Server-01 complete.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-row">
+            <div class="mini-card"><small>Violetgrass Extract</small><div style="font-weight: 800; color: var(--danger);">5 Units (Critical)</div></div>
+            <div class="mini-card"><small>Sweet Flower Oil</small><div style="font-weight: 800; color: var(--success);">450 Units</div></div>
+            <div class="mini-card"><small>Mist Flower Pollen</small><div style="font-weight: 800; color: var(--success);">1,200 Units</div></div>
+            <div class="mini-card"><small>Windwheel Aster</small><div style="font-weight: 800; color: var(--warning);">22 Packs Left</div></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function updateClock() {
+        const now = new Date();
+        const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+        document.getElementById('liveTime').innerText = now.toLocaleTimeString('en-US', timeOptions);
+        const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('liveDate').innerText = now.toLocaleDateString('en-US', dateOptions);
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+</script>
+
+</body>
+</html>
