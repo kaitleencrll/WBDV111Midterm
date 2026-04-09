@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop</title>
+    <style>
+        :root {
+            --maroon: #600000;
+            --beige: #f5f5dc;
+            --white: #ffffff;
+            --cream: #fffdd0;
+            --neon: #ff3131;
+            --glass: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--beige);
+            color: var(--maroon);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background: var(--maroon);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        .logo-container {
+            text-align: center;
+            line-height: 0.8;
+        }
+
+        .logo-main {
+            font-family: 'Georgia', serif;
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--white);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 0px var(--neon);
+        }
+
+        .logo-sub {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 32px;
+            color: var(--cream);
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .nav-links a, .nav-btn {
+            padding: 10px 20px;
+            background: var(--white);
+            color: var(--maroon);
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 12px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover, .nav-btn:hover {
+            background: var(--maroon);
+            color: var(--white);
+            border-color: var(--neon);
+            box-shadow: 0 0 15px var(--neon);
+        }
+
+        #account-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(15px);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .account-card {
+            background: linear-gradient(145deg, rgba(128, 0, 0, 0.9), rgba(64, 0, 0, 0.95));
+            border: 2px solid var(--white);
+            padding: 50px 40px;
+            border-radius: 40px;
+            width: 380px;
+            text-align: center;
+            box-shadow: 0 0 40px var(--neon), inset 0 0 20px rgba(255,255,255,0.1);
+            position: relative;
+        }
+
+        .account-card::after {
+            content: '';
+            position: absolute;
+            top: 15px; left: 15px; right: 15px; bottom: 15px;
+            border: 1px dashed rgba(255,255,255,0.3);
+            border-radius: 30px;
+            pointer-events: none;
+        }
+
+        .account-card h2 {
+            font-family: 'Georgia', serif;
+            color: var(--white);
+            letter-spacing: 10px;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            font-size: 32px;
+            font-weight: 900;
+            text-shadow: 2px 2px 0px var(--neon);
+        }
+
+        .account-card input {
+            width: 100%;
+            padding: 16px 25px;
+            margin: 12px 0;
+            border: none;
+            border-bottom: 2px solid var(--white);
+            background: rgba(255,255,255,0.1);
+            box-sizing: border-box;
+            color: var(--white);
+            font-weight: bold;
+            outline: none;
+        }
+
+        .action-btn {
+            width: 100%;
+            padding: 16px;
+            margin-top: 35px;
+            background: var(--white);
+            color: var(--maroon);
+            border: none;
+            font-weight: 900;
+            cursor: pointer;
+            transition: 0.4s;
+            letter-spacing: 3px;
+            box-shadow: 5px 5px 0px var(--neon);
+        }
+
+        .grid-wrapper {
+            width: 96%;
+            margin: 40px auto;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            padding-bottom: 80px;
+        }
+
+        .cake-card {
+            background: var(--white);
+            border-radius: 25px;
+            overflow: hidden;
+            border: 1px solid #ddd;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cake-card:hover {
+            border-color: var(--neon);
+            box-shadow: 0 0 30px var(--neon);
+            transform: translateY(-8px);
+        }
+
+        .img-box {
+            width: 100%;
+            aspect-ratio: 1/1;
+            overflow: hidden;
+            border-bottom: 4px solid var(--maroon);
+        }
+
+        .img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cake-info {
+            padding: 15px;
+            text-align: center;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .tag-pill {
+            display: inline-block;
+            background: var(--maroon);
+            color: var(--cream);
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 9px;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .cake-name {
+            font-family: 'Georgia', serif;
+            font-size: 16px;
+            font-weight: 900;
+            margin: 0;
+            color: var(--maroon);
+            min-height: 40px;
+        }
+
+        .cake-details {
+            font-size: 11px;
+            color: #666;
+            margin: 8px 0;
+            background: var(--beige);
+            padding: 5px;
+            border-radius: 8px;
+        }
+
+        .cake-price {
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--maroon);
+            margin: 8px 0;
+            display: block;
+            text-shadow: 1px 1px 0px var(--neon);
+        }
+
+        .add-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--maroon);
+            color: var(--white);
+            border: none;
+            font-weight: 900;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 12px;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 0px #400000;
+        }
+
+        .add-btn:hover {
+            background: var(--neon);
+            box-shadow: 0 0 15px var(--neon);
+            transform: translateY(-2px);
+        }
+
+        .section-title {
+            width: 94%;
+            margin: 30px auto;
+            border-left: 10px solid var(--maroon);
+            padding-left: 15px;
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 900;
+        }
+
+        @media (max-width: 1200px) { .grid-wrapper { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 768px) { .grid-wrapper { grid-template-columns: repeat(2, 1fr); } }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo-container">
+        <div class="logo-main">Velvet Crust</div>
+        <div class="logo-sub">Cakes</div>
+    </div>
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="cart.html">Cart (<span id="cart-count">0</span>)</a>
+        <button class="nav-btn" onclick="openAccount()">Account</button>
+    </div>
+</nav>
+
+<div id="account-modal">
+    <div class="account-card">
+        <h2>ACCOUNT</h2>
+        <input type="text" placeholder="Username">
+        <input type="password" placeholder="Password">
+        <button class="action-btn">SIGN IN</button>
+        <p onclick="closeAccount()" style="margin-top:30px; color:white; cursor:pointer; font-size:11px; letter-spacing:3px; font-weight: 900; text-transform: uppercase;">[ Close ]</p>
+    </div>
+</div>
+
+<h2 class="section-title">Our Full Menu</h2>
+
+<div class="grid-wrapper" id="grid"></div>
+
+<script>
+let cakes=[
+    {name:"Furina’s Crown Cake",size:"Medium",cat:"Genshin Impact",flavor:"Vanilla Blueberry",desc:"A royal delight featuring shimmering blueberry glaze and elegant vanilla peaks.",price:700,img:"https://upload-os-bbs.hoyolab.com/upload/2024/03/22/130477544/a3020f3c328f5f7f672d7f7b5e7431f7_5807706587841278024.jpg?x-oss-process=image%2Fresize%2Cs_1000%2Fauto-orient%2C0%2Finterlace%2C1%2Fformat%2Cwebp%2Fquality%2Cq_70"},
+    {name:"Tartaglia’s Hey Girlie Cake",size:"Small",cat:"Genshin Impact",flavor:"Lemon Blueberry",desc:"Playful citrus notes meet sweet berries for a cake that's as bold as a Harbinger.",price:300,img:"https://scontent.fmnl17-5.fna.fbcdn.net/v/t39.30808-6/486351647_1066564365494738_8903229085564049836_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=102&ccb=1-7&_nc_sid=13d280&_nc_ohc=mexMl6SR73kQ7kNvwHvvOaf&_nc_oc=AdqAwL3jct-sIoFGDzGU9T0kg-7fu9jjPOrp65dyfGvkBCOlgkHwWk-0YC09Za4E37k&_nc_zt=23&_nc_ht=scontent.fmnl17-5.fna&_nc_gid=e9VZfqSUUaKHpa3ME_pvJA&_nc_ss=7a389&oh=00_Af0YHg0MTAdXxXSL7-skk6FSgbP8OQ8k0yjbnTo0tZqyPA&oe=69DD072C"},
+    {name:"Zhongli’s Ultimate Mora Cake",size:"Large",cat:"Genshin Impact",flavor:"Caramel Mocha",desc:"Rich espresso sponge layered with golden salted caramel—a contract you can't refuse.",price:1200,img:"https://riverashbakery.com/cdn/shop/files/Genshin-Character-cake-2.jpg?v=1721742429"},
+    {name:"Phainon’s Charm Cake",size:"Medium",cat:"Honkai Star Rail",flavor:"Matcha Pistachio",desc:"Cosmic matcha layers blended with roasted pistachio cream for an otherworldly taste.",price:650,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTq9IT1KZ4FplZrY8f5f8AD3DgGlNU50X0RHA&s"},
+    {name:"Take Your Heart Cake",size:"Medium",cat:"Persona 5",flavor:"Red Velvet",desc:"Rebellious cocoa layers with a mask of smooth cream cheese—simply heart-stealing.",price:750,img:"https://i.redd.it/yef6a1blizn61.png"},
+    {name:"Inazuma Fan Cake",size:"Small",cat:"Genshin Impact",flavor:"Ube",desc:"Authentic purple yam sponge inspired by the timeless beauty of Narukami Island.",price:400,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3BhGbRiasJ2esTpmrAKBzgfKXo8GF2_JfIQ&s"},
+    {name:"Klee’s Bomb Cake",size:"Medium",cat:"Genshin Impact",flavor:"Cream Cheese",desc:"An explosion of velvety cream cheese frosting that’s dangerous for your diet!",price:600,img:"https://upload-os-bbs.hoyolab.com/upload/2023/05/02/255212507/e0d6689be53400b67763616ea23ea203_6774094663270694942.jpg"},
+    {name:"Gojo Sensei’s Cake",size:"Medium",cat:"Jujutsu Kaisen",flavor:"Blueberry",desc:"The strongest blueberry flavor imaginable, featuring an 'infinite' level of sweetness.",price:650,img:"https://i.pinimg.com/736x/4a/a1/b5/4aa1b56fd5a55283eb7e57a71daf58d8.jpg"},
+    {name:"Luffy’s One Piece Cake",size:"Large",cat:"One Piece",flavor:"Chocolate Mango",desc:"A tropical treasure chest of dark chocolate and sun-ripened mango chunks.",price:1500,img:"https://scontent.fmnl17-6.fna.fbcdn.net/v/t39.30808-6/495966746_1110941877721505_7910090109009087496_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=109&ccb=1-7&_nc_sid=7b2446&_nc_ohc=ZpxUszrwqBAQ7kNvwET_AWb&_nc_oc=Adpjm1KIfNNJOy30W6CS5DFrWzz2dDnGn3txRW42fnZshKHhVmeOq10vV0AqXogKapQ&_nc_zt=23&_nc_ht=scontent.fmnl17-6.fna&_nc_gid=3msBrO8K-uNrDI4woYmgxg&_nc_ss=7a389&oh=00_Af3CdKZNqW4J7aE6l595O0pGFO2u6pG7ZEX7Nz0lk1vLKA&oe=69DCE814"},
+    {name:"Super Naruto Cake",size:"Medium",cat:"Naruto",flavor:"Carrot",desc:"Ninja-grade carrot cake spiced with cinnamon—perfect for achieving your Hokage dreams.",price:550,img:"https://scontent.fmnl17-1.fna.fbcdn.net/v/t39.30808-6/630701693_25717828781201195_8171948013294379855_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=101&ccb=1-7&_nc_sid=e06c5d&_nc_ohc=lODJQn5-lR0Q7kNvwGvjTat&_nc_oc=AdrMZoes8VoMo_xvpNAvrH5jftib4ShTVTJgR925Tl1zIR4RYIv-M8EFDXnpieHI1JU&_nc_zt=23&_nc_ht=scontent.fmnl17-1.fna&_nc_gid=3uf2JcMxBLTWtL-OXqqLWQ&_nc_ss=7a389&oh=00_Af2lKVitidA7KV_QHg5gxTwmaSuKjwmnUQTaf6-hO-0uJQ&oe=69DD01EB"}
+];
+
+let cart=JSON.parse(localStorage.getItem("cart")||"[]");
+
+function render(){
+let g=document.getElementById("grid");g.innerHTML="";
+cakes.forEach(c=>{
+g.innerHTML+=`
+    <div class="cake-card">
+        <div class="img-box">
+            <img src="${c.img}" alt="${c.name}">
+        </div>
+        <div class="cake-info">
+            <div>
+                <span class="tag-pill">${c.cat}</span>
+                <h3 class="cake-name">${c.name}</h3>
+                <p class="cake-details">
+                    <b>Flavor:</b> ${c.flavor} | <b>Size:</b> ${c.size}<br>
+                    <small>${c.desc}</small>
+                </p>
+            </div>
+            <div>
+                <span class="cake-price">₱${c.price.toLocaleString()}</span>
+                <button class="add-btn" onclick="add('${c.name}',${c.price})">ADD TO CART</button>
+            </div>
+        </div>
+    </div>`
+});
+update();
+}
+
+function add(n,p){cart.push({n,p});localStorage.setItem("cart",JSON.stringify(cart));update();}
+function update(){document.getElementById("cart-count").innerText=cart.length;}
+function openAccount(){document.getElementById("account-modal").style.display="flex";}
+function closeAccount(){document.getElementById("account-modal").style.display="none";}
+render();
+</script>
+
+</body>
+</html>
