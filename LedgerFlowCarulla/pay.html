@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pay</title>
+    <style>
+        :root {
+            --primary: #050b18;
+            --accent: #00f2ff;
+            --accent-purple: #7000ff;
+            --bg: #020617;
+            --card: #0f172a;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --neon-glow: 0 0 15px rgba(0, 242, 255, 0.4);
+            --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        body { 
+            margin:0; 
+            font-family: 'Inter', sans-serif; 
+            background: var(--bg); 
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        .navbar { 
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 15px 50px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 242, 255, 0.2);
+        }
+
+        .logo { 
+            font-size: 26px; 
+            font-weight: 900; 
+            letter-spacing: -0.5px; 
+            color: #fff;
+            text-transform: uppercase;
+            text-shadow: var(--neon-glow);
+        }
+        .logo span { color: var(--accent); font-weight: 400; margin-left: 2px; }
+
+        .nav-links { display: flex; gap: 15px; }
+        
+        .nav-btn {
+            padding: 10px 20px;
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 12px;
+            transition: var(--transition);
+            background: transparent;
+            border: 1px solid transparent;
+            cursor: pointer;
+        }
+
+        .nav-btn:hover {
+            color: var(--accent);
+            border-color: rgba(0, 242, 255, 0.3);
+            box-shadow: var(--neon-glow);
+        }
+
+        .active-link {
+            color: var(--accent);
+            border-color: rgba(0, 242, 255, 0.3);
+            box-shadow: var(--neon-glow);
+        }
+
+        .btn-acc {
+            background: linear-gradient(45deg, var(--accent), var(--accent-purple)) !important;
+            color: white !important;
+            border: none !important;
+        }
+
+        .container { padding: 50px; max-width: 800px; margin: auto; }
+
+        .content-card { 
+            background: var(--card); 
+            border-radius: 24px; 
+            border: 1px solid rgba(255,255,255,0.05); 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            padding: 40px;
+        }
+
+        h2 { margin-top: 0; font-size: 28px; letter-spacing: -1px; }
+
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-size: 12px; color: var(--accent); font-weight: 800; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 1px; }
+
+        input {
+            width: 100%; 
+            padding: 16px; 
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px; 
+            color: white;
+            box-sizing: border-box;
+            outline: none;
+            transition: 0.3s;
+            font-size: 15px;
+        }
+
+        input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 10px rgba(0, 242, 255, 0.2);
+        }
+
+        .btn-main {
+            padding: 16px;
+            background: #fff;
+            color: var(--primary);
+            border: none;
+            border-radius: 12px;
+            font-weight: 800;
+            width: 100%;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 16px;
+        }
+
+        .btn-main:hover {
+            background: var(--accent);
+            box-shadow: var(--neon-glow);
+            transform: translateY(-2px);
+        }
+
+        .btn-pdf {
+            background: var(--accent-purple);
+            color: white;
+            margin-top: 15px;
+        }
+
+        #result {
+            margin-top: 30px;
+            padding: 25px;
+            background: rgba(0, 242, 255, 0.05);
+            border-radius: 15px;
+            border: 1px dashed var(--accent);
+            text-align: center;
+            animation: entrance 0.5s ease-out;
+        }
+
+        /* Fixed Account Modal - Matches Index/Clients */
+        #modal {
+            display:none; 
+            position:fixed; 
+            top:0; left:0; width:100%; height:100%; 
+            background:rgba(2, 6, 23, 0.9); 
+            backdrop-filter: blur(15px); 
+            z-index:2000;
+        }
+
+        .modal-content {
+            background: var(--card); 
+            width: 400px; 
+            margin: 100px auto; 
+            padding: 50px; 
+            border-radius: 30px; 
+            text-align: center; 
+            border: 1px solid rgba(0, 242, 255, 0.3);
+            box-shadow: var(--neon-glow);
+        }
+
+        .modal-content input {
+            width: 100%; 
+            margin-bottom: 20px; 
+            padding: 16px; 
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px; 
+            color: white;
+            box-sizing: border-box;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        @keyframes entrance {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">Ledger<span>Flow</span></div>
+    <div class="nav-links">
+        <button class="nav-btn" onclick="location.href='index.html'">Invoices</button>
+        <button class="nav-btn" onclick="location.href='clients.html'">Clients</button>
+        <button class="nav-btn active-link" onclick="location.href='pay.html'">Pay</button>
+        <button class="nav-btn btn-acc" onclick="openModal()">Account</button>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="content-card">
+        <h2>Payment Terminal</h2>
+        
+        <div class="form-group">
+            <label>Invoice Reference</label>
+            <input type="text" placeholder="e.g. #KC7205">
+        </div>
+
+        <div class="form-group">
+            <label>Client Identity</label>
+            <input type="text" placeholder="Enter Client Name">
+        </div>
+
+        <div class="form-group">
+            <label>Settlement Date</label>
+            <input type="date">
+        </div>
+
+        <div class="form-group">
+            <label>Amount (PHP)</label>
+            <input type="number" placeholder="₱ 0.00">
+        </div>
+
+        <button class="btn-main" onclick="generateLink()">Generate Payment Link</button>
+
+        <div id="result" style="display:none;">
+            <div style="font-size: 11px; color: var(--accent); margin-bottom: 10px; font-weight: 800; letter-spacing: 2px;">ENCRYPTED LINK GENERATED</div>
+            <code style="display: block; background: #000; padding: 12px; border-radius: 8px; color: var(--accent); margin-bottom: 20px; font-family: monospace;">
+                https://ledgerflow.pay
+            </code>
+            <button class="btn-main btn-pdf" onclick="generatePDF()">Generate PDF & Finalize</button>
+        </div>
+    </div>
+</div>
+
+<div id="modal">
+    <div class="modal-content">
+        <div style="font-size: 40px; margin-bottom: 20px;">🛡️</div>
+        <h2 style="margin-top:0; font-weight: 900; letter-spacing: -1px;">Secure Terminal</h2>
+        <p style="color: var(--text-muted); margin-bottom: 30px; font-size: 14px;">Authorized Personnel Only</p>
+        <input type="email" placeholder="Terminal ID (Email)">
+        <input type="password" placeholder="Access Key">
+        <div style="text-align: left; margin-bottom: 20px; font-size: 12px; color: var(--accent);">
+            ● Multi-factor authentication active<br>
+            ● Encrypted session enabled
+        </div>
+        <button class="btn-main" onclick="closeModal()">Initialize Access</button>
+        <button style="background:none; border:none; color: var(--text-muted); margin-top:20px; cursor:pointer;" onclick="closeModal()">Abort</button>
+    </div>
+</div>
+
+<script>
+    function openModal(){ document.getElementById('modal').style.display='block'; }
+    function closeModal(){ document.getElementById('modal').style.display='none'; }
+    
+    function generateLink(){
+        document.getElementById('result').style.display = 'block';
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+
+    function generatePDF() {
+        alert("PDF Generated successfully! Redirecting to Invoice Portal...");
+        location.href = 'index.html';
+    }
+</script>
+
+</body>
+</html>
