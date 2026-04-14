@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <style>
+        :root {
+            --maroon: #600000;
+            --beige: #f5f5dc;
+            --white: #ffffff;
+            --cream: #fffdd0;
+            --neon: #ff3131;
+            --glass: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--beige);
+            color: var(--maroon);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background: var(--maroon);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        .logo-container {
+            text-align: center;
+            line-height: 0.8;
+        }
+
+        .logo-main {
+            font-family: 'Georgia', serif;
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--white);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 0px var(--neon);
+        }
+
+        .logo-sub {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 32px;
+            color: var(--cream);
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .nav-links a, .nav-btn {
+            padding: 10px 20px;
+            background: var(--white);
+            color: var(--maroon);
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 12px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover, .nav-btn:hover {
+            background: var(--maroon);
+            color: var(--white);
+            border-color: var(--neon);
+            box-shadow: 0 0 15px var(--neon);
+        }
+
+        #account-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(15px);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .account-card {
+            background: linear-gradient(145deg, rgba(128, 0, 0, 0.9), rgba(64, 0, 0, 0.95));
+            border: 2px solid var(--white);
+            padding: 50px 40px;
+            border-radius: 40px;
+            width: 380px;
+            text-align: center;
+            box-shadow: 0 0 40px var(--neon), inset 0 0 20px rgba(255,255,255,0.1);
+        }
+
+        .account-card h2 {
+            font-family: 'Georgia', serif;
+            color: var(--white);
+            letter-spacing: 10px;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            font-size: 32px;
+            font-weight: 900;
+            text-shadow: 2px 2px 0px var(--neon);
+        }
+
+        .account-card input {
+            width: 100%;
+            padding: 16px 25px;
+            margin: 12px 0;
+            border: none;
+            border-bottom: 2px solid var(--white);
+            background: rgba(255,255,255,0.1);
+            box-sizing: border-box;
+            color: var(--white);
+            font-weight: bold;
+            outline: none;
+        }
+
+        .cart-container {
+            width: 80%;
+            max-width: 900px;
+            margin: 50px auto;
+            background: var(--white);
+            padding: 40px;
+            border-radius: 40px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.1);
+            border: 1px solid #ddd;
+        }
+
+        .section-title {
+            border-left: 10px solid var(--maroon);
+            padding-left: 20px;
+            font-size: 32px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-weight: 900;
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        tr {
+            border-bottom: 1px solid #eee;
+        }
+
+        td {
+            padding: 20px;
+            font-size: 18px;
+        }
+
+        .item-name {
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--maroon);
+        }
+
+        .del-btn {
+            background: var(--neon);
+            color: white;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .del-btn:hover {
+            transform: rotate(90deg) scale(1.2);
+            box-shadow: 0 0 15px var(--neon);
+        }
+
+        .summary {
+            margin-top: 40px;
+            text-align: right;
+            padding-top: 20px;
+            border-top: 5px solid var(--maroon);
+        }
+
+        .total-txt {
+            font-size: 36px;
+            font-weight: 900;
+            color: var(--maroon);
+            text-shadow: 1px 1px 0px var(--neon);
+        }
+
+        .checkout-btn {
+            margin-top: 20px;
+            padding: 18px 50px;
+            background: var(--maroon);
+            color: var(--white);
+            border: none;
+            font-weight: 900;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 16px;
+            letter-spacing: 2px;
+            box-shadow: 0 6px 0px #400000;
+        }
+
+        .checkout-btn:hover {
+            background: var(--neon);
+            box-shadow: 0 0 25px var(--neon);
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo-container">
+        <div class="logo-main">Velvet Crust</div>
+        <div class="logo-sub">Cakes</div>
+    </div>
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="cart.html">Cart (<span id="cart-count">0</span>)</a>
+        <button class="nav-btn" onclick="openAccount()">Account</button>
+    </div>
+</nav>
+
+<div id="account-modal">
+    <div class="account-card">
+        <h2>ACCOUNT</h2>
+        <input type="text" placeholder="Username">
+        <input type="password" placeholder="Password">
+        <button style="width:100%; padding:16px; margin-top:35px; background:var(--white); color:var(--maroon); border:none; font-weight:900; cursor:pointer; box-shadow: 5px 5px 0px var(--neon);">SIGN IN</button>
+        <p onclick="closeAccount()" style="margin-top:30px; color:white; cursor:pointer; font-size:11px; letter-spacing:3px; font-weight: 900; text-transform: uppercase;">[ Close ]</p>
+    </div>
+</div>
+
+<div class="cart-container">
+    <h2 class="section-title">Your Basket</h2>
+    <table>
+        <tbody id="list"></tbody>
+    </table>
+
+    <div class="summary">
+        <div class="total-txt">TOTAL: ₱<span id="total">0</span></div>
+        <button class="checkout-btn" onclick="checkout()">PROCEED TO CHECKOUT</button>
+    </div>
+</div>
+
+<script>
+let cart=JSON.parse(localStorage.getItem("cart")||"[]");
+
+function render(){
+    let l=document.getElementById("list");
+    l.innerHTML="";
+    let t=0;
+    
+    if(cart.length === 0) {
+        l.innerHTML = "<tr><td colspan='3' style='text-align:center; padding:50px; opacity:0.5;'>Your basket is empty.</td></tr>";
+    }
+
+    cart.forEach((c,i)=>{
+        l.innerHTML+=`
+        <tr>
+            <td class="item-name">${c.n}</td>
+            <td style="font-weight:900;">₱${c.p.toLocaleString()}</td>
+            <td style="text-align:right;"><button class="del-btn" onclick="del(${i})">✕</button></td>
+        </tr>`;
+        t+=c.p;
+    });
+    
+    document.getElementById("total").innerText=t.toLocaleString();
+    document.getElementById("cart-count").innerText=cart.length;
+}
+
+function del(i){
+    cart.splice(i,1);
+    localStorage.setItem("cart",JSON.stringify(cart));
+    render();
+}
+
+function checkout(){
+    if(cart.length === 0) return alert("Your cart is empty!");
+    alert("Thank you for your order! Your cakes are being prepared.");
+    localStorage.removeItem("cart");
+    location.href="index.html";
+}
+
+function openAccount(){document.getElementById("account-modal").style.display="flex";}
+function closeAccount(){document.getElementById("account-modal").style.display="none";}
+
+render();
+</script>
+
+</body>
+</html>
